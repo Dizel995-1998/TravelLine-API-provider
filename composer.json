@@ -1,6 +1,6 @@
 {
-    "name": "egik/travellline-api",
-    "version": "1.0.1",
+    "name": "egik/travelline-api",
+    "version": "1.0.2",
     "description": "API client for bil24",
     "type": "library",
     "license": "proprietary",
@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "egik\\TravelllineApi\\": "src/"
+            "egik\\TravellineApi\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "egik\\TravelllineApi\\": "tests/"
+            "egik\\TravellineApi\\": "tests/"
         }
     },
     "scripts": {
