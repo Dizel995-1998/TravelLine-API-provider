@@ -1,0 +1,27 @@
+{
+    "name": "egik/travellline-api",
+    "version": "1.0.0",
+    "description": "API client for bil24",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.2.5",
+        "ext-json": "*"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "egik\\TravelllineApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "egik\\TravelllineApi\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test" : "./vendor/bin/simple-phpunit"
+    }
+}
