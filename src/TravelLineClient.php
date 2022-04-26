@@ -9,14 +9,19 @@ use egik\TravellineApi\Dto\PropertyEvents\PropertyEvent;
 use egik\TravellineApi\Dto\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use GuzzleHttp\Client;
-use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use \egik\TravellineApi\Dto\SpecifiedProperty\Property as SpecifiedProperty;
+use \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 
 /**
- * Провайдер для работы с API Travelline (todo: добавить ссылку на сваггер)
+ * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
+ * todo: оформить пакет как бандл
+ * todo: В доке плохо описаны возвращаемые значения, уточнить у представителей TravelLine возможные коды ошибок
+ * Провайдер для работы с API Travelline (https://partner.qatl.ru/docs/booking-process/)
  */
 class TravelLineClient
 {
@@ -44,14 +49,17 @@ class TravelLineClient
 
     public function __construct(
         Client $httpClient,
-        Serializer $serializer,
         string $apiKey,
         string $baseUrl = self::DEFAULT_BASE_URL
     ) {
         $this->baseUrl = $this->deleteLastSlashIfNeed($baseUrl);
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
-        $this->serializer = $serializer;
+
+        $arrayDenormalized = new ArrayDenormalizer();
+        $propNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
+        $arrayDenormalized->setDenormalizer($propNormalizer);
+        $this->serializer = new Serializer([$arrayDenormalized, $propNormalizer], [new JsonEncoder()]);
     }
 
     private function deleteLastSlashIfNeed(string $baseUrl): string
@@ -67,24 +75,10 @@ class TravelLineClient
         string $httpMethod, // todo: заменить перечислением при переходе на 8.0
         string $endpoint,
         array $queryParams = [],
-        $requestBody = null, // todo: можем принимать только массив?
+        array $requestBody = [], // todo: можем принимать только массив?
         bool $throwExceptionWhenFail = true,
         int &$httpResponseCode = 0
     ): array {
-        // fixme: избавиться от говно проверки при переходе на 8.0
-        if (
-            !$requestBody instanceof JsonSerializable &&
-            !is_array($requestBody) &&
-            !is_string($requestBody) &&
-            !is_null($requestBody)
-        ) {
-            $errMsg =
-                '$requestBody argument support one of "array, string, JsonSerializable" type, but '
-                . gettype($requestBody) . ' was given';
-
-            throw new \InvalidArgumentException($errMsg);
-        }
-
         $response = $this->httpClient->request($httpMethod, $this->baseUrl . $endpoint, [
             'headers' => [
                 'X-API-KEY' => $this->apiKey,
@@ -156,8 +150,6 @@ class TravelLineClient
     }
 
     /**
-     * todo: уточнить что возвращается если объект не найден
-     *
      * Получить информацию о конкретном средстве размещения
      * @return SpecifiedProperty
      */
