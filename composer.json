@@ -5,8 +5,14 @@
     "type": "library",
     "license": "proprietary",
     "require": {
-        "php": ">=7.2.5",
-        "ext-json": "*"
+        "php": ">=7.3.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0",
+        "jworman/annotation-reader": "^1.4",
+        "phpdocumentor/reflection-docblock": "^5.3",
+        "symfony/property-access": "^5.4",
+        "symfony/property-info": "^5.4",
+        "symfony/serializer": "^5.4"
     },
     "config": {
         "sort-packages": true
