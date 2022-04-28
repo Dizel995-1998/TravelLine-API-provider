@@ -8,6 +8,7 @@ use egik\TravellineApi\Dto\Property\Property;
 use egik\TravellineApi\Dto\PropertyEvents\PropertyEvent;
 use egik\TravellineApi\Dto\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
+use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use \egik\TravellineApi\Dto\SpecifiedProperty\Property as SpecifiedProperty;
 use \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
+use  \egik\TravellineApi\ResponseDto\RoomStays\RoomStays as RoomStaysResponse;
 
 /**
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
@@ -71,14 +73,40 @@ class TravelLineClient
         return $baseUrl;
     }
 
+    /**
+     * @param string $httpMethod
+     * @param string $endpoint
+     * @param array $queryParams
+     * @param object|array $requestBody
+     * @param bool $throwExceptionWhenFail
+     * @param int $httpResponseCode
+     * @return array
+     * @throws TravelLineBadResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
+     */
     protected function sendRequest(
         string $httpMethod, // todo: заменить перечислением при переходе на 8.0
         string $endpoint,
         array $queryParams = [],
-        array $requestBody = [], // todo: можем принимать только массив?
+        $requestBody = [], // todo: заменить множественным типом при переходе на 8.0
         bool $throwExceptionWhenFail = true,
         int &$httpResponseCode = 0
     ): array {
+        if (
+            !is_array($requestBody) &&
+            !is_object($requestBody)
+        ) {
+            throw new \InvalidArgumentException(sprintf(
+                'Request body can be only array or object, %s was given',
+                gettype($requestBody)
+            ));
+        }
+
+        if (is_object($requestBody)) {
+            $requestBody = $this->serializer->normalize($requestBody);
+        }
+
         $response = $this->httpClient->request($httpMethod, $this->baseUrl . $endpoint, [
             'headers' => [
                 'X-API-KEY' => $this->apiKey,
@@ -178,4 +206,39 @@ class TravelLineClient
         $response = $this->sendRequest('GET', '/content/v1/room-type-categories');
         return $this->serializer->denormalize($response, RoomTypeCategory::class . '[]', JsonEncoder::FORMAT);
     }
+
+    public function searchRoomStays(RoomStays $roomStays): RoomStaysResponse
+    {
+        $response = $this->sendRequest('POST', '/search/v1/properties/room-stays/search', [], $roomStays);
+        return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
+    }
+
+    /**
+     * todo: уточнить формат ответа
+     */
+    public function searchRoomStaysByPropertyId(
+        string $propertyId,
+        \DateTimeImmutable $arrivalDate,
+        \DateTimeImmutable $departureDate,
+        int $adults,
+        bool $includeContent,
+        ?array $childAges = null
+    ): RoomStaysResponse {
+        $queryParams = [
+            'adults' => $adults,
+            'childAges' => $childAges,
+            'departureDate' => $departureDate,
+            'arrivalDate' => $arrivalDate,
+        ];
+
+        if ($includeContent) {
+            $queryParams['include'] = 'content';
+        }
+
+        $point = '/search/v1/properties/' . $propertyId . '/room-stays';
+        $response = $this->sendRequest('GET', $point, $queryParams, []);
+        return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
+    }
+
+
 }
