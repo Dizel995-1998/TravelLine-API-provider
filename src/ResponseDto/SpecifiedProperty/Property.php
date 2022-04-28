@@ -1,8 +1,8 @@
 <?php
 
-namespace egik\TravellineApi\Dto\SpecifiedProperty;
+namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 
-use egik\TravellineApi\Dto\Property\Policy;
+use egik\TravellineApi\ResponseDto\Property\Policy;
 
 class Property
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace egik\TravellineApi\Dto\MealPlan;
+namespace egik\TravellineApi\ResponseDto\MealPlan;
 
 class MealPlan
 {

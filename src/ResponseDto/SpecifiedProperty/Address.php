@@ -1,8 +1,8 @@
 <?php
 
-namespace egik\TravellineApi\Dto\SpecifiedProperty;
+namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 
-class Address extends \egik\TravellineApi\Dto\Property\Address
+class Address extends \egik\TravellineApi\ResponseDto\Property\Address
 {
     /**
      * @var string

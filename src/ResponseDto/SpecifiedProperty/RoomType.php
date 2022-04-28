@@ -1,8 +1,8 @@
 <?php
 
-namespace egik\TravellineApi\Dto\SpecifiedProperty;
+namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 
-class RoomType extends \egik\TravellineApi\Dto\Property\RoomType
+class RoomType extends \egik\TravellineApi\ResponseDto\Property\RoomType
 {
     /**
      * @var string

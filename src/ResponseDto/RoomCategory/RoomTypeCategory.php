@@ -1,6 +1,6 @@
 <?php
 
-namespace egik\TravellineApi\Dto\RoomCategory;
+namespace egik\TravellineApi\ResponseDto\RoomCategory;
 
 class RoomTypeCategory
 {

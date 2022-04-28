@@ -3,10 +3,10 @@
 namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
-use egik\TravellineApi\Dto\MealPlan\MealPlan;
-use egik\TravellineApi\Dto\Property\Property;
-use egik\TravellineApi\Dto\PropertyEvents\PropertyEvent;
-use egik\TravellineApi\Dto\RoomCategory\RoomTypeCategory;
+use egik\TravellineApi\ResponseDto\MealPlan\MealPlan;
+use egik\TravellineApi\ResponseDto\Property\Property;
+use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEvent;
+use egik\TravellineApi\ResponseDto\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
 use GuzzleHttp\Client;
@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use \egik\TravellineApi\Dto\SpecifiedProperty\Property as SpecifiedProperty;
+use \egik\TravellineApi\ResponseDto\SpecifiedProperty\Property as SpecifiedProperty;
 use \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use  \egik\TravellineApi\ResponseDto\RoomStays\RoomStays as RoomStaysResponse;
 
@@ -239,6 +239,4 @@ class TravelLineClient
         $response = $this->sendRequest('GET', $point, $queryParams, []);
         return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
     }
-
-
 }

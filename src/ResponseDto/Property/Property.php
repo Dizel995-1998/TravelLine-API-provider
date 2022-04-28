@@ -1,8 +1,8 @@
 <?php
 
-namespace egik\TravellineApi\Dto\Property;
+namespace egik\TravellineApi\ResponseDto\Property;
 
-use egik\TravellineApi\Dto\SpecifiedProperty\ContactInfo;
+use egik\TravellineApi\ResponseDto\SpecifiedProperty\ContactInfo;
 
 class Property
 {

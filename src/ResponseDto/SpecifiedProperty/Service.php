@@ -1,8 +1,8 @@
 <?php
 
-namespace egik\TravellineApi\Dto\SpecifiedProperty;
+namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 
-class Service extends \egik\TravellineApi\Dto\Property\Service
+class Service extends \egik\TravellineApi\ResponseDto\Property\Service
 {
     /**
      * @var array<string, string>

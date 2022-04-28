@@ -1,6 +1,6 @@
 <?php
 
-namespace egik\TravellineApi\Dto\SpecifiedProperty;
+namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 
 class Phone
 {

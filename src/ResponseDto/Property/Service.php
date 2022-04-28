@@ -1,6 +1,6 @@
 <?php
 
-namespace egik\TravellineApi\Dto\Property;
+namespace egik\TravellineApi\ResponseDto\Property;
 
 class Service
 {

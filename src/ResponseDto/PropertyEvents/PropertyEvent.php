@@ -1,6 +1,6 @@
 <?php
 
-namespace egik\TravellineApi\Dto\PropertyEvents;
+namespace egik\TravellineApi\ResponseDto\PropertyEvents;
 
 class PropertyEvent
 {
