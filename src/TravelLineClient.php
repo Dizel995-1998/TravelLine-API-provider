@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
+ * todo: добавить в тестах strict type = 1 в бутстрап файле
  * todo: подключить Assert компонент для валидации респонс ДТО
  * todo: добавить GitLab CI в проект, проверка codestyle, psalm, unit tests
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет

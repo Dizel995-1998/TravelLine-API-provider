@@ -124,7 +124,7 @@ class CreateBookingTest extends BaseTestCase
         // total
         $this->assertEquals(1200, $createdBookingResult->getCancellation()->getPenaltyAmount());
         $this->assertEquals('Отмена поездки', $createdBookingResult->getCancellation()->getReason());
-//        $this->assertEquals(new \DateTimeImmutable('2019-06-20T10:41:04Z'), $createdBookingResult->getCancellation()->getCanceledUtc()); // TODO: почему то падает
+        $this->assertEquals(new \DateTimeImmutable('2019-06-20T10:41:04Z'), $createdBookingResult->getCancellation()->getCancelledUtc());
 
         $cancellationPolicy = $createdBookingResult->getCancellationPolicy();
 

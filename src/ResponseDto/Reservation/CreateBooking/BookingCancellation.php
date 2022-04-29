@@ -17,7 +17,7 @@ class BookingCancellation
     /**
      * @var string
      */
-    protected $canceledUtc;
+    protected $cancelledUtc;
 
     /**
      * @return float|null
@@ -38,8 +38,8 @@ class BookingCancellation
     /**
      * @return \DateTimeImmutable
      */
-    public function getCanceledUtc(): \DateTimeImmutable
+    public function getCancelledUtc(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable($this->canceledUtc);
+        return new \DateTimeImmutable($this->cancelledUtc);
     }
 }
