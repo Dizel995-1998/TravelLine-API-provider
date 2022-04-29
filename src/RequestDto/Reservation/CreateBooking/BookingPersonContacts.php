@@ -2,7 +2,7 @@
 
 namespace egik\TravellineApi\RequestDto\Reservation\CreateBooking;
 
-class BookingPersonContracts implements \JsonSerializable
+class BookingPersonContacts implements \JsonSerializable
 {
     /**
      * @var string[]

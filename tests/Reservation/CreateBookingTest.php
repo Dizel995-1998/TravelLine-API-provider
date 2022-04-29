@@ -3,7 +3,7 @@
 namespace egik\TravellineApi\Reservation;
 
 use egik\TravellineApi\BaseTestCase;
-use egik\TravellineApi\RequestDto\Reservation\CreateBooking\BookingPersonContracts;
+use egik\TravellineApi\RequestDto\Reservation\CreateBooking\BookingPersonContacts;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\Customer;
 use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\BookingDailyRate;
@@ -24,7 +24,7 @@ class CreateBookingTest extends BaseTestCase
      */
     public function testSuccessResponse(TravelLineClient $travelLineClient): void
     {
-        $bookingRequest = new CreateBookingRequest(1, [], new Customer('1', '2', '3', new BookingPersonContracts([], [])), '111');
+        $bookingRequest = new CreateBookingRequest(1, [], new Customer('1', '2', '3', new BookingPersonContacts([], [])), '111');
         $createdBookingResult = $travelLineClient->createBooking($bookingRequest);
 
         $this->assertEquals('1024', $createdBookingResult->getPropertyId());
@@ -142,7 +142,26 @@ class CreateBookingTest extends BaseTestCase
     public function testSuccessRequest(): void
     {
         $referenceRequest = [
-
+            'propertyId' => 1066,
+            'roomStays' => [],
+            'customer' => [
+                'firstName' => 'John',
+                'lastName' =>'Dark',
+                'citizenship' => 'RUS',
+                'contacts' => [
+                    'phones' => [
+                        [
+                            'phoneNumber' => '8988 555 44 11',
+                        ],
+                    ],
+                    'emails' => [
+                        [
+                            'emailAddress' => 'test@mail.ru',
+                        ]
+                    ],
+                ],
+            ],
+            'createBookingToken' => '111'
         ];
 
         $guzzleClientMock =
@@ -151,13 +170,17 @@ class CreateBookingTest extends BaseTestCase
         $guzzleClientMock
             ->method('request')
             ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
-//                $this->assertEquals($referenceRequest, $options['body']);
+                $this->assertEquals($referenceRequest, $options['body']);
                 return new Response(200, [], json_encode(['booking' => []]));
             });
 
         $travelLineClient = new TravelLineClient($guzzleClientMock, '111');
+        $personContacts = new BookingPersonContacts(['8988 555 44 11'], ['test@mail.ru']);
+        $customer = new Customer('John', 'Dark', 'RUS', $personContacts);
+        $roomStays = [];
 
-        $bookingRequest = new CreateBookingRequest(1, [], new Customer('1', '2', '3', new BookingPersonContracts([], [])), '111');
+        $bookingRequest = new CreateBookingRequest(1066, $roomStays, $customer, '111');
+
         $travelLineClient->createBooking($bookingRequest);
     }
 }

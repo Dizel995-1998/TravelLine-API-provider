@@ -3,6 +3,7 @@
 namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
+use egik\TravellineApi\Normalizer\PropertyNormalizerDecorator;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
@@ -17,7 +18,9 @@ use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -61,11 +64,18 @@ class TravelLineClient
         $this->baseUrl = $this->deleteLastSlashIfNeed($baseUrl);
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
+        $this->serializer = $this->getSerializer();
+    }
 
+    private function getSerializer(): Serializer
+    {
         $arrayDenormalized = new ArrayDenormalizer();
-        $propNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
-        $arrayDenormalized->setDenormalizer($propNormalizer);
-        $this->serializer = new Serializer([$arrayDenormalized, $propNormalizer], [new JsonEncoder()]);
+
+        $propertyNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
+        $propertyNormalizerDecorator = new PropertyNormalizerDecorator($propertyNormalizer);
+        $arrayDenormalized->setDenormalizer($propertyNormalizer);
+        // TODO: Возможно приоритизация задаётся на основе очереди формируемой в входном массиве, и декортор излишен
+        return new Serializer([$arrayDenormalized, $propertyNormalizerDecorator, $propertyNormalizer], [new JsonEncoder()]);
     }
 
     private function deleteLastSlashIfNeed(string $baseUrl): string
@@ -108,7 +118,9 @@ class TravelLineClient
         }
 
         if (is_object($requestBody)) {
-            $requestBody = $this->serializer->normalize($requestBody);
+            $requestBody = $this->serializer->normalize($requestBody, null, [
+                AbstractObjectNormalizer::SKIP_NULL_VALUES => true
+            ]);
         }
 
         $response = $this->httpClient->request($httpMethod, $this->baseUrl . $endpoint, [

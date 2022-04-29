@@ -25,23 +25,23 @@ class Customer
      * Трезбуквенный код, соответсвует стандарту ISO 3166-1 alpha-3
      * @var string
      */
-    protected $citizenShip;
+    protected $citizenship;
 
     /**
-     * @var BookingPersonContracts
+     * @var BookingPersonContacts
      */
-    protected $contracts;
+    protected $contacts;
 
     public function __construct(
         string $firstName,
         string $lastName,
-        string $citizenShip,
-        BookingPersonContracts $contracts
+        string $citizenship,
+        BookingPersonContacts $contacts
     ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->citizenShip = $citizenShip;
-        $this->contracts = $contracts;
+        $this->citizenship = $citizenship;
+        $this->contacts = $contacts;
     }
 
     public function setMiddleName(string $middleName): void
