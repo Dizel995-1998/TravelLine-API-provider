@@ -7,12 +7,12 @@ class RoomSize
     /**
      * @var int
      */
-    private $value;
+    protected $value;
 
     /**
      * @var string
      */
-    private $unit;
+    protected $unit;
 
     /**
      * @return int

@@ -7,17 +7,17 @@ class Total
     /**
      * @var int
      */
-    private $priceBeforeTax;
+    protected $priceBeforeTax;
 
     /**
      * @var float
      */
-    private $taxAmount;
+    protected $taxAmount;
 
     /**
      * @var Tax[]
      */
-    private $taxes;
+    protected $taxes;
 
     /**
      * @return int

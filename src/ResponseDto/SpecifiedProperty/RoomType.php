@@ -7,12 +7,12 @@ class RoomType extends \egik\TravellineApi\ResponseDto\Property\RoomType
     /**
      * @var string
      */
-    private $categoryCode;
+    protected $categoryCode;
 
     /**
      * @var string
      */
-    private $categoryName;
+    protected $categoryName;
 
     /**
      * @return string

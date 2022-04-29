@@ -7,12 +7,12 @@ class Content
     /**
      * @var RatePlan[]
      */
-    private $ratePlans;
+    protected $ratePlans;
 
     /**
      * @var RoomContentType[]
      */
-    private $roomTypes;
+    protected $roomTypes;
 
     /**
      * @return RatePlan[]

@@ -9,57 +9,57 @@ class Property
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var array
      */
-    private $images;
+    protected $images;
 
     /**
      * @var int
      */
-    private $stars;
+    protected $stars;
 
     /**
      * @var ContactInfo
      */
-    private $contactInfo;
+    protected $contactInfo;
 
     /**
      * @var Policy
      */
-    private $policy;
+    protected $policy;
 
     /**
      * @var array<string, string>
      */
-    private $timeZone;
+    protected $timeZone;
 
     /**
      * @var RatePlan[]
      */
-    private $ratePlans;
+    protected $ratePlans;
 
     /**
      * @var Service[]
      */
-    private $services;
+    protected $services;
 
     /**
      * @var AmenityCategory[]
      */
-    private $amenityCategories;
+    protected $amenityCategories;
 
     /**
      * @return string
@@ -118,7 +118,7 @@ class Property
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public function getTimeZone(): array
     {

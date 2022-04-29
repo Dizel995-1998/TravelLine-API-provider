@@ -7,7 +7,7 @@ class Address extends \egik\TravellineApi\ResponseDto\Property\Address
     /**
      * @var string
      */
-    private $remark;
+    protected $remark;
 
     /**
      * @return string

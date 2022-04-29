@@ -7,72 +7,72 @@ class RoomStay
     /**
      * @var string
      */
-    private $key;
+    protected $key;
 
     /**
      * @var string
      */
-    private $propertyId;
+    protected $propertyId;
 
     /**
      * @var RoomType
      */
-    private $roomType;
+    protected $roomType;
 
     /**
      * @var array<string, string>
      */
-    private $ratePlan;
+    protected $ratePlan;
 
     /**
      * @var GuestCount
      */
-    private $guestCount;
+    protected $guestCount;
 
     /**
      * @var StayDates
      */
-    private $stayDates;
+    protected $stayDates;
 
     /**
      * @var int
      */
-    private $availability;
+    protected $availability;
 
     /**
      * @var string
      */
-    private $currencyCode;
+    protected $currencyCode;
 
     /**
      * @var Total
      */
-    private $total;
+    protected $total;
 
     /**
      * @var CancellationPolicy
      */
-    private $cancellationPolicy;
+    protected $cancellationPolicy;
 
     /**
      * @var IncludeService[]
      */
-    private $includedServices;
+    protected $includedServices;
 
     /**
      * @var string
      */
-    private $mealPlanCode;
+    protected $mealPlanCode;
 
     /**
      * @var string
      */
-    private $checksum;
+    protected $checksum;
 
     /**
      * @var string
      */
-    private $fullPlacementsName;
+    protected $fullPlacementsName;
 
     public function getKey(): string
     {

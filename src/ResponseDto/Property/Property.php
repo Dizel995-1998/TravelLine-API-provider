@@ -9,52 +9,52 @@ class Property
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var array
      */
-    private $images;
+    protected $images;
 
     /**
      * @var int
      */
-    private $stars;
+    protected $stars;
 
     /**
      * @var ContactInfo
      */
-    private $contactInfo;
+    protected $contactInfo;
 
     /**
      * @var Policy
      */
-    private $policy;
+    protected $policy;
 
     /**
      * @var RatePlan[]
      */
-    private $ratePlans;
+    protected $ratePlans;
 
     /**
      * @var RoomType[]
      */
-    private $roomTypes;
+    protected $roomTypes;
 
     /**
      * @var Service[]
      */
-    private $services;
+    protected $services;
 
     /**
      * @return string

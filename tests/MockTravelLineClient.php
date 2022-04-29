@@ -2,6 +2,7 @@
 
 namespace egik\TravellineApi;
 
+use egik\TravellineApi\ResponseDto\SpecifiedProperty\Property as SpecifiedProperty;
 use GuzzleHttp\Client;
 
 class MockTravelLineClient extends TravelLineClient
@@ -11,6 +12,11 @@ class MockTravelLineClient extends TravelLineClient
         $urlParts = explode('/', $url);
         array_shift($urlParts);
         return implode('_', $urlParts) . '.json';
+    }
+
+    public function getPropertyById(string $propertyId): SpecifiedProperty
+    {
+        return parent::getPropertyById('1');
     }
 
     protected function sendRequest(

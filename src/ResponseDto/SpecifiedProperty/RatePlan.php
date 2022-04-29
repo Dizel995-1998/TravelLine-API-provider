@@ -7,37 +7,37 @@ class RatePlan
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var array<int, string>
      */
-    private $includedServicesIds;
+    protected $includedServicesIds;
 
     /**
      * @var Vat
      */
-    private $vat;
+    protected $vat;
 
     /**
      * @var
      */
-    private $roomTypes;
+    protected $roomTypes;
 
     /**
      * @return string

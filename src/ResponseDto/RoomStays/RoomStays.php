@@ -7,17 +7,17 @@ class RoomStays
     /**
      * @var RoomStay[]
      */
-    private $roomStays;
+    protected $roomStays;
 
     /**
      * @var Content
      */
-    private $content;
+    protected $content;
 
     /**
      * @var Warning[]
      */
-    private $warnings;
+    protected $warnings;
 
     public function getRoomStays(): array
     {

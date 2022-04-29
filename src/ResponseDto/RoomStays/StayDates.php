@@ -7,12 +7,12 @@ class StayDates
     /**
      * @var string
      */
-    private $arrivalDateTime;
+    protected $arrivalDateTime;
 
     /**
      * @var string
      */
-    private $departureDateTime;
+    protected $departureDateTime;
 
     /**
      * @return string

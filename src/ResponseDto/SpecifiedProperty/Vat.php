@@ -7,17 +7,17 @@ class Vat
     /**
      * @var bool
      */
-    private $applicable;
+    protected $applicable;
 
     /**
      * @var bool
      */
-    private $included;
+    protected $included;
 
     /**
      * @var int
      */
-    private $percent;
+    protected $percent;
 
     /**
      * @return bool

@@ -7,12 +7,12 @@ class Service extends \egik\TravellineApi\ResponseDto\Property\Service
     /**
      * @var array<string, string>
      */
-    private $images;
+    protected $images;
 
     /**
      * @var Vat
      */
-    private $vat;
+    protected $vat;
 
     /**
      * @return string[]

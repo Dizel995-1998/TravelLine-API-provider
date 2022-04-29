@@ -7,27 +7,27 @@ class Placement
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @var int
      */
-    private $count;
+    protected $count;
 
     /**
      * @var string
      */
-    private $kind;
+    protected $kind;
 
     /**
      * @var int|null
      */
-    private $minAge;
+    protected $minAge;
 
     /**
      * @var int|null
      */
-    private $maxAge;
+    protected $maxAge;
 
     /**
      * @return string

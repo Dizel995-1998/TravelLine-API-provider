@@ -7,32 +7,32 @@ class RoomType
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var array
      */
-    private $amenities;
+    protected $amenities;
 
     /**
      * @var array
      */
-    private $images;
+    protected $images;
 
     /**
      * @var RoomSize
      */
-    private $size;
+    protected $size;
 
     /**
      * @return string

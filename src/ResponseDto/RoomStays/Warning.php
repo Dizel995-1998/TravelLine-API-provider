@@ -7,12 +7,12 @@ class Warning
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      */
-    private $message;
+    protected $message;
 
     /**
      * @return string

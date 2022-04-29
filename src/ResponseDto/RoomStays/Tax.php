@@ -7,17 +7,17 @@ class Tax
     /**
      * @var float
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @return float

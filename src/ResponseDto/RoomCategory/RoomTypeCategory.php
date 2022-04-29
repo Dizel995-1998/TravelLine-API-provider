@@ -7,12 +7,12 @@ class RoomTypeCategory
     /**
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @return string

@@ -7,12 +7,12 @@ class GuestCount
     /**
      * @var int
      */
-    private $adultCount;
+    protected $adultCount;
 
     /**
      * @var int[]
      */
-    private $childAges;
+    protected $childAges;
 
     /**
      * @return int

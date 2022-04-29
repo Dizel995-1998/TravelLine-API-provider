@@ -7,17 +7,17 @@ class ContactInfo
     /**
      * @var Address
      */
-    private $address;
+    protected $address;
 
     /**
      * @var Phone[]
      */
-    private $phones;
+    protected $phones;
 
     /**
      * @var array<int, string>
      */
-    private $emails;
+    protected $emails;
 
     /**
      * @return Address

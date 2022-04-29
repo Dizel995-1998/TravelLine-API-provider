@@ -7,32 +7,32 @@ class Service
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      */
-    private $kind;
+    protected $kind;
 
     /**
      * @var string|null
      */
-    private $mealPlanCode;
+    protected $mealPlanCode;
 
     /**
      * @var string|null
      */
-    private $mealPlanName;
+    protected $mealPlanName;
 
     /**
      * @return string

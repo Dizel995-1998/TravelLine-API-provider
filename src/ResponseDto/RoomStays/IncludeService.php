@@ -7,12 +7,12 @@ class IncludeService
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string|null
      */
-    private $mealPlanCode;
+    protected $mealPlanCode;
 
     public function getId(): string
     {

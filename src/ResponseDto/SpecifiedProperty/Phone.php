@@ -7,12 +7,12 @@ class Phone
     /**
      * @var string
      */
-    private $phoneNumber;
+    protected $phoneNumber;
 
     /**
      * @var string
      */
-    private $remark;
+    protected $remark;
 
     /**
      * @return string

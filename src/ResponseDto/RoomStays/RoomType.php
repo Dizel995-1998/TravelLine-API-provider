@@ -7,12 +7,12 @@ class RoomType
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Placement[]
      */
-    private $placements;
+    protected $placements;
 
     /**
      * @return string

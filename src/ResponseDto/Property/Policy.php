@@ -7,12 +7,12 @@ class Policy
     /**
      * @var string (example 14:00)
      */
-    private $checkInTime;
+    protected $checkInTime;
 
     /**
      * @var string (example 12:00)
      */
-    private $checkOutTime;
+    protected $checkOutTime;
 
     /**
      * @return string

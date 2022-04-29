@@ -7,47 +7,47 @@ class Address
     /**
      * @var string
      */
-    private $postalCode;
+    protected $postalCode;
 
     /**
      * @var string
      */
-    private $countryCode;
+    protected $countryCode;
 
     /**
      * @var string
      */
-    private $region;
+    protected $region;
 
     /**
      * @var string
      */
-    private $regionId;
+    protected $regionId;
 
     /**
      * @var string
      */
-    private $cityName;
+    protected $cityName;
 
     /**
      * @var string
      */
-    private $cityId;
+    protected $cityId;
 
     /**
      * @var string
      */
-    private $addressLine;
+    protected $addressLine;
 
     /**
      * @var float
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @var float
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * @return string

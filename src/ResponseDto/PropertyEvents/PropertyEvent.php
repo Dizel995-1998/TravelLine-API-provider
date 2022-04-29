@@ -7,17 +7,17 @@ class PropertyEvent
     /**
      * @var string
      */
-    private $created;
+    protected $created;
 
     /**
      * @var string
      */
-    private $propertyId;
+    protected $propertyId;
 
     /**
      * @var string
      */
-    private $eventType;
+    protected $eventType;
 
     /**
      * @return \DateTimeImmutable

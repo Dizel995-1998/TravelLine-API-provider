@@ -7,22 +7,22 @@ class CancellationPolicy
     /**
      * @var bool
      */
-    private $freeCancellationPossible;
+    protected $freeCancellationPossible;
 
     /**
      * @var string
      */
-    private $freeCancellationDeadlineLocal;
+    protected $freeCancellationDeadlineLocal;
 
     /**
      * @var string
      */
-    private $freeCancellationDeadlineUtc;
+    protected $freeCancellationDeadlineUtc;
 
     /**
      * @var int
      */
-    private $penaltyAmount;
+    protected $penaltyAmount;
 
     public function isFreeCancellationPossible(): bool
     {

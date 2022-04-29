@@ -7,17 +7,17 @@ class RatePlan
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $propertyId;
+    protected $propertyId;
 
     /**
      * @return string

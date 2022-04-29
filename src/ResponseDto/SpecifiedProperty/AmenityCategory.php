@@ -5,14 +5,14 @@ namespace egik\TravellineApi\ResponseDto\SpecifiedProperty;
 class AmenityCategory
 {
     /**
-     * @var string
+     * @var int
      */
-    private $index;
+    protected $index;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @return string
