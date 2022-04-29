@@ -18,4 +18,19 @@ class RoomStays
      * @var Warning[]
      */
     private $warnings;
+
+    public function getRoomStays(): array
+    {
+        return $this->roomStays;
+    }
+
+    public function getContent(): Content
+    {
+        return $this->content;
+    }
+
+    public function getWarnings(): array
+    {
+        return $this->warnings;
+    }
 }

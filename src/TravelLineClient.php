@@ -20,6 +20,7 @@ use \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use  \egik\TravellineApi\ResponseDto\RoomStays\RoomStays as RoomStaysResponse;
 
 /**
+ * todo: добавить GitLab CI в проект, проверка codestyle, psalm, unit tests
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
  * todo: оформить пакет как бандл
  * todo: В доке плохо описаны возвращаемые значения, уточнить у представителей TravelLine возможные коды ошибок
@@ -123,10 +124,11 @@ class TravelLineClient
             throw new TravelLineBadResponseException($response->getBody()->getContents(), $httpResponseCode);
         }
 
+        // todo: заюзать функционал сериалайзера
         return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
 
-    private function isSuccessResponse(ResponseInterface $response): bool
+    protected function isSuccessResponse(ResponseInterface $response): bool
     {
         return $response->getStatusCode() >= 200 && $response->getStatusCode() < 300;
     }
@@ -238,5 +240,11 @@ class TravelLineClient
         $point = '/search/v1/properties/' . $propertyId . '/room-stays';
         $response = $this->sendRequest('GET', $point, $queryParams, []);
         return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
+    }
+
+    public function createBooking(
+
+    ) {
+
     }
 }

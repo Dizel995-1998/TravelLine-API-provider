@@ -1,0 +1,83 @@
+{
+  "roomStays": [
+    {
+      "key": "YXJkdD0iMjAyMC0xMC0wNSImZGVkdD0iMjAyMC0xMC0wNyImaGFzaD0iMTI0MTJmc2ZzZGYi",
+      "propertyId": "1024",
+      "roomType": {
+        "id": "45687",
+        "placements": [
+          {
+            "code": "AdultBed-2",
+            "count": 2,
+            "kind": "Adult",
+            "minAge": null,
+            "maxAge": null
+          }
+        ]
+      },
+      "ratePlan": {
+        "id": "987657"
+      },
+      "guestCount": {
+        "adultCount": 1,
+        "childAges": [
+          5
+        ]
+      },
+      "stayDates": {
+        "arrivalDateTime": "2019-10-01T12:00",
+        "departureDateTime": "2019-10-02T14:00"
+      },
+      "availability": 50,
+      "currencyCode": "RUB",
+      "total": {
+        "priceBeforeTax": 2400,
+        "taxAmount": 95.5,
+        "taxes": [
+          {
+            "amount": 95.5,
+            "name": "Курортный сбор",
+            "description": "Сбор с каждого гостя, оплата на стойке регистрации"
+          }
+        ]
+      },
+      "cancellationPolicy": {
+        "freeCancellationPossible": true,
+        "freeCancellationDeadlineLocal": "2019-09-30T12:00",
+        "freeCancellationDeadlineUtc": "2019-09-30T09:00Z",
+        "penaltyAmount": 1200
+      },
+      "includedServices": [
+        {
+          "id": "46545",
+          "mealPlanCode": null
+        }
+      ],
+      "mealPlanCode": "RoomOnly",
+      "checksum": "380d250cd98b256fa204477876f298f7d6bde126",
+      "fullPlacementsName": "2 взрослых на основных местах, 1 ребёнок на дополнительном месте."
+    }
+  ],
+  "content": {
+    "ratePlans": [
+      {
+        "id": "987657",
+        "name": "Основной тариф",
+        "propertyId": "1024"
+      }
+    ],
+    "roomTypes": [
+      {
+        "id": "45687",
+        "name": "Стандартный",
+        "propertyId": "1024"
+      }
+    ]
+  },
+  "warnings": [
+    {
+      "code": "NotEnoughRights",
+      "message": "Not enough rights to hotel"
+    }
+  ]
+}

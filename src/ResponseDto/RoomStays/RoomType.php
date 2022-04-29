@@ -13,4 +13,20 @@ class RoomType
      * @var Placement[]
      */
     private $placements;
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Placement[]
+     */
+    public function getPlacements(): array
+    {
+        return $this->placements;
+    }
 }

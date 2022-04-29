@@ -13,4 +13,14 @@ class IncludeService
      * @var string|null
      */
     private $mealPlanCode;
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getMealPlanCode(): ?string
+    {
+        return $this->mealPlanCode;
+    }
 }

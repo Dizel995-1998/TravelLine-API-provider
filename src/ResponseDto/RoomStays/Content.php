@@ -13,4 +13,20 @@ class Content
      * @var RoomContentType[]
      */
     private $roomTypes;
+
+    /**
+     * @return RatePlan[]
+     */
+    public function getRatePlans(): array
+    {
+        return $this->ratePlans;
+    }
+
+    /**
+     * @return RoomContentType[]
+     */
+    public function getRoomTypes(): array
+    {
+        return $this->roomTypes;
+    }
 }
