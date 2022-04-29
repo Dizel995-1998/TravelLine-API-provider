@@ -1,10 +1,10 @@
 <?php
 
-namespace egik\TravellineApi;
+namespace egik\TravellineApi\Search;
 
+use egik\TravellineApi\BaseTestCase;
 use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
-use GuzzleHttp\Client;
-use PHPUnit\Framework\TestCase;
+use egik\TravellineApi\TravelLineClient;
 
 class SearchRoomStaysTest extends BaseTestCase
 {
