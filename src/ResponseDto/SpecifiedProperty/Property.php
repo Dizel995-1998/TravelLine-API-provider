@@ -62,6 +62,11 @@ class Property
     protected $amenityCategories;
 
     /**
+     * @var RoomType[]
+     */
+    protected $roomTypes;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -147,5 +152,13 @@ class Property
     public function getAmenityCategories(): array
     {
         return $this->amenityCategories;
+    }
+
+    /**
+     * @return RoomType[]
+     */
+    public function getRoomTypes(): array
+    {
+        return $this->roomTypes;
     }
 }

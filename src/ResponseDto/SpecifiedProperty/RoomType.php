@@ -15,6 +15,11 @@ class RoomType extends \egik\TravellineApi\ResponseDto\Property\RoomType
     protected $categoryName;
 
     /**
+     * @var Amenity[]
+     */
+    protected $amenities;
+
+    /**
      * @return string
      */
     public function getCategoryCode(): string
@@ -28,5 +33,13 @@ class RoomType extends \egik\TravellineApi\ResponseDto\Property\RoomType
     public function getCategoryName(): string
     {
         return $this->categoryName;
+    }
+
+    /**
+     * @return Amenity[]
+     */
+    public function getAmenities(): array
+    {
+        return $this->amenities;
     }
 }

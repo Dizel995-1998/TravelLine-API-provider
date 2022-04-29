@@ -55,6 +55,7 @@ class GetPropertyByIdTest extends BaseTestCase
 
         $this->assertCount(1, $specifiedProperty->getRatePlans());
 
+        // Rate plans
         foreach ($specifiedProperty->getRatePlans() as $ratePlan) {
             $this->assertEquals('133528', $ratePlan->getId());
             $this->assertEquals('Основной тариф', $ratePlan->getName());
@@ -72,5 +73,48 @@ class GetPropertyByIdTest extends BaseTestCase
             $this->assertTrue($ratePlan->getVat()->isIncluded());
             $this->assertEquals(20, $ratePlan->getVat()->isApplicable());
         }
+
+        // Room Types
+        $this->assertCount(1, $specifiedProperty->getRoomTypes());
+        $roomType = current($specifiedProperty->getRoomTypes());
+
+        $this->assertEquals('82751', $roomType->getId());
+        $this->assertEquals('Стандартный', $roomType->getName());
+        $this->assertEquals('Каждый номер (25 м2) оформлен в стиле, сочетающем элегантную классику с современными элементами декора и высоким уровнем комфорта.  Номера категории Стандарт рассчитаны на размещение 2-х человек на двух раздельных полутораспальных кроватях (120*200). Возможно размещение третьего человека на дополнительном месте, устанавливается евро-раскладушка. Для маленьких детей предоставляются кроватки. 
+
+В каждом из номеров к услугам гостей:
+-	Высокоскоростной WiFi интернет, LCD телевизор с большим выбором кабельных каналов и возможностью просмотра кинофильмов через интернет
+-	Просторные ванные комнаты, оборудованные душевыми кабинами с гидромассажным и тропическим душем; 
+-	Косметика и туалетные принадлежности, халаты и тапочки
+-	Высококачественное постельное белье
+-	Балкон, оснащенный удобной мебелью, прекрасный вид на Финский залив и острова.', $roomType->getDescription());
+
+        $this->assertCount(1, $roomType->getAmenities());
+        $amenity = current($roomType->getAmenities());
+
+        $this->assertEquals(6, $amenity->getAmenityCategoryIndex());
+        $this->assertEquals('HydromassageShower', $amenity->getCode());
+        $this->assertEquals('гидромассажный душ', $amenity->getName());
+
+        // Services
+        $this->assertCount(1, $specifiedProperty->getServices());
+        $service = current($specifiedProperty->getServices());
+
+        $this->assertEquals('42807', $service->getId());
+        $this->assertEquals('Новогодняя елка', $service->getName());
+        $this->assertEquals('Детская Новогодняя ёлка', $service->getDescription());
+        $this->assertEquals('Common', $service->getKind());
+        $this->assertNull($service->getMealPlanCode());
+        $this->assertNull($service->getMealPlanName());
+        $this->assertEquals([['url' => 'https://www.travelline.ru/images/sample.jpg']], $service->getImages());
+        $this->assertTrue($service->getVat()->isApplicable());
+        $this->assertTrue($service->getVat()->isIncluded());
+        $this->assertEquals(20, $service->getVat()->getPercent());
+
+        // AmenityCategories
+        $this->assertCount(1, $specifiedProperty->getAmenityCategories());
+        $amenityCategory = current($specifiedProperty->getAmenityCategories());
+        $this->assertEquals(6, $amenityCategory->getIndex());
+        $this->assertEquals('Внешняя территория и вид из окон', $amenityCategory->getName());
     }
 }
