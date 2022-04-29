@@ -1,0 +1,112 @@
+{
+  "next": null,
+  "properties": [
+    {
+      "id": "1024",
+      "name": "Тестовая гостиница Travelline",
+      "description": "string",
+      "images": [
+        {
+          "url": "https://www.travelline.ru/images/sample.jpg"
+        }
+      ],
+      "stars": 4,
+      "contactInfo": {
+        "address": {
+          "postalCode": "129366",
+          "countryCode": "RUS",
+          "region": "г. Москва",
+          "regionId": "18",
+          "cityName": "г. Москва",
+          "cityId": "8",
+          "addressLine": "пр-т Мира, д. 150",
+          "latitude": 56.637028,
+          "longitude": 47.8772,
+          "remark": "Поверните, когда увидите парус"
+        },
+        "phones": [
+          {
+            "phoneNumber": "+7 (495) 234-00-00",
+            "remark": "Голосовой помощник"
+          }
+        ],
+        "emails": [
+          "travellinehotel@travelline.ru"
+        ]
+      },
+      "policy": {
+        "checkInTime": "14:00",
+        "checkOutTime": "12:00"
+      },
+      "timeZone": {
+        "name": "Russian Standard Time"
+      },
+      "ratePlans": [
+        {
+          "id": "133528",
+          "name": "Основной тариф",
+          "description": "Забронируйте проживание по самой выгодной цене!\nВ стоимость проживания включено:\n- Бесплатная охраняемая парковка на территории отеля\n- Высокоростной беспроводной интернет\n- Детская площадка на территории отеля",
+          "currency": "RUB",
+          "includedServicesIds": [
+            "42807"
+          ],
+          "vat": {
+            "applicable": true,
+            "included": true,
+            "percent": 20
+          }
+        }
+      ],
+      "roomTypes": [
+        {
+          "id": "82751",
+          "name": "Стандартный",
+          "description": "Каждый номер (25 м2) оформлен в стиле, сочетающем элегантную классику с современными элементами декора и высоким уровнем комфорта.  Номера категории Стандарт рассчитаны на размещение 2-х человек на двух раздельных полутораспальных кроватях (120*200). Возможно размещение третьего человека на дополнительном месте, устанавливается евро-раскладушка. Для маленьких детей предоставляются кроватки. \n\nВ каждом из номеров к услугам гостей:\n-\tВысокоскоростной WiFi интернет, LCD телевизор с большим выбором кабельных каналов и возможностью просмотра кинофильмов через интернет\n-\tПросторные ванные комнаты, оборудованные душевыми кабинами с гидромассажным и тропическим душем; \n-\tКосметика и туалетные принадлежности, халаты и тапочки\n-\tВысококачественное постельное белье\n-\tБалкон, оснащенный удобной мебелью, прекрасный вид на Финский залив и острова.",
+          "amenities": [
+            {
+              "amenityCategoryIndex": 6,
+              "code": "HydromassageShower",
+              "name": "гидромассажный душ"
+            }
+          ],
+          "images": [
+            {
+              "url": "https://www.travelline.ru/images/sample.jpg"
+            }
+          ],
+          "size": {
+            "value": 25
+          },
+          "categoryCode": "PlaceInRoom",
+          "categoryName": "Место в номере"
+        }
+      ],
+      "services": [
+        {
+          "id": "42807",
+          "name": "Новогодняя елка",
+          "description": "Детская Новогодняя ёлка",
+          "kind": "Common",
+          "mealPlanCode": null,
+          "mealPlanName": null,
+          "images": [
+            {
+              "url": "https://www.travelline.ru/images/sample.jpg"
+            }
+          ],
+          "vat": {
+            "applicable": true,
+            "included": true,
+            "percent": 20
+          }
+        }
+      ],
+      "amenityCategories": [
+        {
+          "index": 6,
+          "name": "Внешняя территория и вид из окон"
+        }
+      ]
+    }
+  ]
+}

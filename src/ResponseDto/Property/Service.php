@@ -25,12 +25,12 @@ class Service
     private $kind;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $mealPlanCode;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $mealPlanName;
 
@@ -69,7 +69,7 @@ class Service
     /**
      * @return string
      */
-    public function getMealPlanCode(): string
+    public function getMealPlanCode(): ?string
     {
         return $this->mealPlanCode;
     }
@@ -77,7 +77,7 @@ class Service
     /**
      * @return string
      */
-    public function getMealPlanName(): string
+    public function getMealPlanName(): ?string
     {
         return $this->mealPlanName;
     }

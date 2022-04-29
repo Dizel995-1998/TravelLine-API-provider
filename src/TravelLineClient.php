@@ -4,6 +4,7 @@ namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
 use egik\TravellineApi\ResponseDto\MealPlan\MealPlan;
+use egik\TravellineApi\ResponseDto\Property\PropertiesResult;
 use egik\TravellineApi\ResponseDto\Property\Property;
 use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEvent;
 use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEventsResult;
@@ -148,21 +149,21 @@ class TravelLineClient
             'timestamp' => $filterAfterTime,
         ];
 
-        $deserializedData = $this->sendRequest(
+        $response = $this->sendRequest(
             'GET',
             '/content/v1/properties/events',
             $query,
         );
 
-        $continue = $deserializedData['continue'] ?? null;
-        return $this->serializer->denormalize($deserializedData, PropertyEventsResult::class, JsonEncoder::FORMAT);
+        $continue = $response['continue'] ?? null;
+        return $this->serializer->denormalize($response, PropertyEventsResult::class, JsonEncoder::FORMAT);
     }
 
     /**
      *  Получение информации о средствах размещения
-     * @return Property[]|null
+     * @return PropertiesResult
      */
-    public function getProperties(?int $count = null, bool $includeAllData = true): ?array
+    public function getProperties(?int $count = null, bool $includeAllData = true): PropertiesResult
     {
         static $since = null;
 
@@ -173,7 +174,7 @@ class TravelLineClient
         ]);
 
         $since = $response['next'] ?? null;
-        return $this->serializer->denormalize($response['properties'], Property::class . '[]', JsonEncoder::FORMAT);
+        return $this->serializer->denormalize($response, PropertiesResult::class, JsonEncoder::FORMAT);
     }
 
     /**
