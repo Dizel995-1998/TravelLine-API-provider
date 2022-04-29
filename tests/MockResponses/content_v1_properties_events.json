@@ -1,0 +1,11 @@
+{
+  "events": [
+    {
+      "created": "2019-06-20T10:41:04Z",
+      "propertyId": "1024",
+      "eventType": "Added"
+    }
+  ],
+  "continuousToken": "Qm9va2luZ0NvbnRpbnVhdGlvblRva2Vu",
+  "hasMoreData": false
+}

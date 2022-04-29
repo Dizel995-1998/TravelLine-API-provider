@@ -6,20 +6,8 @@ use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
-class SearchRoomStaysTest extends TestCase
+class SearchRoomStaysTest extends BaseTestCase
 {
-    /**
-     * todo: разобраться почему не работает на protected and private
-     */
-    public function mockTravelLineClientDataProvider(): array
-    {
-        return [
-            [
-                new MockTravelLineClient($this->createMock(Client::class), '1111')
-            ]
-        ];
-    }
-
     /**
      * @dataProvider mockTravelLineClientDataProvider
      */

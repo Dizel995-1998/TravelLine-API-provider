@@ -5,7 +5,7 @@ namespace egik\TravellineApi\ResponseDto\PropertyEvents;
 class PropertyEvent
 {
     /**
-     * @var \DateTimeImmutable
+     * @var string
      */
     private $created;
 
@@ -24,7 +24,7 @@ class PropertyEvent
      */
     public function getCreated(): \DateTimeImmutable
     {
-        return $this->created;
+        return new \DateTimeImmutable($this->created);
     }
 
     /**

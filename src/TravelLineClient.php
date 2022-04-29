@@ -6,6 +6,7 @@ namespace egik\TravellineApi;
 use egik\TravellineApi\ResponseDto\MealPlan\MealPlan;
 use egik\TravellineApi\ResponseDto\Property\Property;
 use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEvent;
+use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEventsResult;
 use egik\TravellineApi\ResponseDto\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
@@ -135,9 +136,9 @@ class TravelLineClient
 
     /**
      *  Получения событий по всем средствам размещений.
-     * @return PropertyEvent[]|null
+     * @return PropertyEventsResult
      */
-    public function getPropertiesEvents(?\DateTimeImmutable $filterAfterTime = null, ?int $count = null): ?array
+    public function getPropertiesEvents(?\DateTimeImmutable $filterAfterTime = null, ?int $count = null): PropertyEventsResult
     {
         static $continue = null;
 
@@ -153,12 +154,8 @@ class TravelLineClient
             $query,
         );
 
-        if (!$deserializedData['hasMoreData']) {
-            return null;
-        }
-
         $continue = $deserializedData['continue'] ?? null;
-        return $this->serializer->denormalize($deserializedData, PropertyEvent::class . '[]', JsonEncoder::FORMAT);
+        return $this->serializer->denormalize($deserializedData, PropertyEventsResult::class, JsonEncoder::FORMAT);
     }
 
     /**
