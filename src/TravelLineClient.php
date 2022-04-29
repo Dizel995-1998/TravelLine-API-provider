@@ -4,6 +4,7 @@ namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
+use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
 use egik\TravellineApi\ResponseDto\Content\MealPlan\MealPlan;
 use egik\TravellineApi\ResponseDto\Content\Property\PropertiesResult;
@@ -212,9 +213,6 @@ class TravelLineClient
         return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
     }
 
-    /**
-     * todo: уточнить формат ответа
-     */
     public function searchRoomStaysByPropertyId(
         string $propertyId,
         \DateTimeImmutable $arrivalDate,
@@ -239,9 +237,10 @@ class TravelLineClient
         return $this->serializer->denormalize($response, ResponseDto\Search\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
     }
 
-    public function createBooking(
+    public function createBooking(CreateBookingRequest $bookingRequest)
+    {
+        $response = $this->sendRequest('POST', '/reservation/v1/bookings', [], $bookingRequest);
 
-    ) {
-
+        // todo: realize return DTO
     }
 }
