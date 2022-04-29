@@ -70,12 +70,10 @@ class TravelLineClient
     private function getSerializer(): Serializer
     {
         $arrayDenormalized = new ArrayDenormalizer();
-
         $propertyNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
-        $propertyNormalizerDecorator = new PropertyNormalizerDecorator($propertyNormalizer);
         $arrayDenormalized->setDenormalizer($propertyNormalizer);
-        // TODO: Возможно приоритизация задаётся на основе очереди формируемой в входном массиве, и декортор излишен
-        return new Serializer([$arrayDenormalized, $propertyNormalizerDecorator, $propertyNormalizer], [new JsonEncoder()]);
+
+        return new Serializer([$arrayDenormalized, new JsonSerializableNormalizer(), $propertyNormalizer], [new JsonEncoder()]);
     }
 
     private function deleteLastSlashIfNeed(string $baseUrl): string
