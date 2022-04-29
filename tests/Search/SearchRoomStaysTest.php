@@ -3,7 +3,7 @@
 namespace egik\TravellineApi\Search;
 
 use egik\TravellineApi\BaseTestCase;
-use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
+use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
 use egik\TravellineApi\TravelLineClient;
 
 class SearchRoomStaysTest extends BaseTestCase

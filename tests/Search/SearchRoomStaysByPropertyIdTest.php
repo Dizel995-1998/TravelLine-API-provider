@@ -3,9 +3,9 @@
 namespace egik\TravellineApi\Search;
 
 use egik\TravellineApi\BaseTestCase;
-use egik\TravellineApi\ResponseDto\RoomStays\IncludedService;
-use egik\TravellineApi\ResponseDto\RoomStays\Placement;
-use egik\TravellineApi\ResponseDto\RoomStays\Tax;
+use egik\TravellineApi\ResponseDto\Search\RoomStays\IncludedService;
+use egik\TravellineApi\ResponseDto\Search\RoomStays\Placement;
+use egik\TravellineApi\ResponseDto\Search\RoomStays\Tax;
 use egik\TravellineApi\TravelLineClient;
 
 class SearchRoomStaysByPropertyIdTest extends BaseTestCase

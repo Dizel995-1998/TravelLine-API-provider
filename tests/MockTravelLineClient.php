@@ -2,7 +2,7 @@
 
 namespace egik\TravellineApi;
 
-use egik\TravellineApi\ResponseDto\SpecifiedProperty\Property as SpecifiedProperty;
+use egik\TravellineApi\ResponseDto\Content\SpecifiedProperty\Property as SpecifiedProperty;
 
 class MockTravelLineClient extends TravelLineClient
 {

@@ -3,25 +3,24 @@
 namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
-use egik\TravellineApi\ResponseDto\MealPlan\MealPlan;
-use egik\TravellineApi\ResponseDto\Property\PropertiesResult;
-use egik\TravellineApi\ResponseDto\Property\Property;
-use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEvent;
-use egik\TravellineApi\ResponseDto\PropertyEvents\PropertyEventsResult;
-use egik\TravellineApi\ResponseDto\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
-use egik\TravellineApi\RequestDto\RoomStays\RoomStays;
+use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
+use egik\TravellineApi\ResponseDto\Content\MealPlan\MealPlan;
+use egik\TravellineApi\ResponseDto\Content\Property\PropertiesResult;
+use egik\TravellineApi\ResponseDto\Content\PropertyEvents\PropertyEventsResult;
+use egik\TravellineApi\ResponseDto\Content\RoomCategory\RoomTypeCategory;
+use egik\TravellineApi\ResponseDto\Content\SpecifiedProperty\Property as SpecifiedProperty;
+use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use \egik\TravellineApi\ResponseDto\SpecifiedProperty\Property as SpecifiedProperty;
-use \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
-use  \egik\TravellineApi\ResponseDto\RoomStays\RoomStays as RoomStaysResponse;
 
 /**
+ * todo: подключить Assert компонент для валидации респонс ДТО
  * todo: добавить GitLab CI в проект, проверка codestyle, psalm, unit tests
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
  * todo: оформить пакет как бандл
@@ -223,7 +222,7 @@ class TravelLineClient
         int $adults,
         bool $includeContent,
         ?array $childAges = null
-    ): ResponseDto\RoomStaysById\RoomStays {
+    ): ResponseDto\Search\RoomStaysById\RoomStays {
         $queryParams = [
             'adults' => $adults,
             'childAges' => $childAges,
@@ -237,7 +236,7 @@ class TravelLineClient
 
         $point = '/search/v1/properties/' . $propertyId . '/room-stays';
         $response = $this->sendRequest('GET', $point, $queryParams, []);
-        return $this->serializer->denormalize($response, ResponseDto\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
+        return $this->serializer->denormalize($response, ResponseDto\Search\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
     }
 
     public function createBooking(
