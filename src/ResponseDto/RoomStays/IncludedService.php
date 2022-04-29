@@ -2,7 +2,7 @@
 
 namespace egik\TravellineApi\ResponseDto\RoomStays;
 
-class IncludeService
+class IncludedService
 {
     /**
      * @var string

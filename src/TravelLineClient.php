@@ -223,7 +223,7 @@ class TravelLineClient
         int $adults,
         bool $includeContent,
         ?array $childAges = null
-    ): RoomStaysResponse {
+    ): ResponseDto\RoomStaysById\RoomStays {
         $queryParams = [
             'adults' => $adults,
             'childAges' => $childAges,
@@ -237,7 +237,7 @@ class TravelLineClient
 
         $point = '/search/v1/properties/' . $propertyId . '/room-stays';
         $response = $this->sendRequest('GET', $point, $queryParams, []);
-        return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
+        return $this->serializer->denormalize($response, ResponseDto\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
     }
 
     public function createBooking(

@@ -3,7 +3,6 @@
 namespace egik\TravellineApi;
 
 use egik\TravellineApi\ResponseDto\SpecifiedProperty\Property as SpecifiedProperty;
-use GuzzleHttp\Client;
 
 class MockTravelLineClient extends TravelLineClient
 {

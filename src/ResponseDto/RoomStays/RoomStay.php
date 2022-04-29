@@ -55,7 +55,7 @@ class RoomStay
     protected $cancellationPolicy;
 
     /**
-     * @var IncludeService[]
+     * @var IncludedService[]
      */
     protected $includedServices;
 
