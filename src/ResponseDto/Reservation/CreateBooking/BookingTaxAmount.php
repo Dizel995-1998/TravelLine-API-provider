@@ -13,4 +13,20 @@ class BookingTaxAmount
      * @var integer
      */
     protected $index;
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndex(): int
+    {
+        return $this->index;
+    }
 }

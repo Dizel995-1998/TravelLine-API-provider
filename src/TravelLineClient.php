@@ -11,6 +11,7 @@ use egik\TravellineApi\ResponseDto\Content\Property\PropertiesResult;
 use egik\TravellineApi\ResponseDto\Content\PropertyEvents\PropertyEventsResult;
 use egik\TravellineApi\ResponseDto\Content\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\ResponseDto\Content\SpecifiedProperty\Property as SpecifiedProperty;
+use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\CreatedBookingResult;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -114,7 +115,7 @@ class TravelLineClient
             'headers' => [
                 'X-API-KEY' => $this->apiKey,
             ],
-            'body' => $requestBody,
+            'body' => $requestBody, // todo: maybe json key?
             'http_errors' => false,
             'query' => $queryParams,
             'timeout' => 60,
@@ -237,10 +238,9 @@ class TravelLineClient
         return $this->serializer->denormalize($response, ResponseDto\Search\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
     }
 
-    public function createBooking(CreateBookingRequest $bookingRequest)
+    public function createBooking(CreateBookingRequest $bookingRequest): CreatedBookingResult
     {
         $response = $this->sendRequest('POST', '/reservation/v1/bookings', [], $bookingRequest);
-
-        // todo: realize return DTO
+        return $this->serializer->denormalize($response['booking'], CreatedBookingResult::class, JsonEncoder::FORMAT);
     }
 }

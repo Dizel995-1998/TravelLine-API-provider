@@ -13,4 +13,20 @@ class BookingStayDates
      * @var string
      */
     protected $departureDateTime;
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getArrivalDateTime(): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable($this->arrivalDateTime);
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDepartureDateTime(): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable($this->departureDateTime);
+    }
 }
