@@ -36,6 +36,9 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
+ * todo: добавить оставшейся JSON моки респонсов в папочку тестов
+ * todo: разобраться с warning: [null]
+ * todo: добавить в моки префикс HTTP метода
  * todo: задокументировать методы и добавить ссылку на флоу оформления в репу
  * todo: добавить в тестах strict type = 1 в бутстрап файле
  * todo: подключить Assert компонент для валидации респонс ДТО
