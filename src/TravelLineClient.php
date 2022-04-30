@@ -214,7 +214,7 @@ class TravelLineClient
     }
 
     /**
-     * @template T of DTO
+     * @template T
      * @param array $denormalizedData
      * @param class-string<T> $toDtoClass
      * @return T
