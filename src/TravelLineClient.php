@@ -182,7 +182,7 @@ class TravelLineClient
         $options = [
             'headers' => ['X-API-KEY' => $this->apiKey],
             'http_errors' => false,
-//            'timeout' => 60,
+            'timeout' => 60,
         ];
 
         if (!empty($requestBody)) {
