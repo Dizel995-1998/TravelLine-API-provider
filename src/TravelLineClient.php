@@ -6,6 +6,7 @@ namespace egik\TravellineApi;
 use egik\TravellineApi\Normalizer\PropertyNormalizerDecorator;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
+use egik\TravellineApi\RequestDto\Reservation\Verify\VerifyBookingRequest;
 use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
 use egik\TravellineApi\ResponseDto\Content\MealPlan\MealPlan;
 use egik\TravellineApi\ResponseDto\Content\Property\PropertiesResult;
@@ -13,11 +14,13 @@ use egik\TravellineApi\ResponseDto\Content\PropertyEvents\PropertyEventsResult;
 use egik\TravellineApi\ResponseDto\Content\RoomCategory\RoomTypeCategory;
 use egik\TravellineApi\ResponseDto\Content\SpecifiedProperty\Property as SpecifiedProperty;
 use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\CreatedBookingResult;
+use egik\TravellineApi\ResponseDto\Reservation\Verify\VerifyBookingResult;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
@@ -253,5 +256,11 @@ class TravelLineClient
     {
         $response = $this->sendRequest('POST', '/reservation/v1/bookings', [], $bookingRequest);
         return $this->serializer->denormalize($response['booking'], CreatedBookingResult::class, JsonEncoder::FORMAT);
+    }
+
+    public function verifyBooking(VerifyBookingRequest $verifyBookingRequest): VerifyBookingResult
+    {
+        $response = $this->sendRequest('POST', '/reservation/v1/bookings/verify', [], $verifyBookingRequest);
+        return $this->serializer->denormalize($response, VerifyBookingResult::class, JsonEncoder::FORMAT, [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     }
 }

@@ -1,0 +1,135 @@
+{
+  "booking": {
+    "propertyId": "1024",
+    "roomStays": [
+      {
+        "stayDates": {
+          "arrivalDateTime": "2019-10-01T14:00",
+          "departureDateTime": "2019-10-02T12:00"
+        },
+        "ratePlan": {
+          "id": "133528",
+          "name": "Онлайн бронирование",
+          "description": "Самые лучшие цены, тут"
+        },
+        "roomType": {
+          "id": "82751",
+          "placements": [
+            {
+              "code": "AdultBed-2",
+              "count": 2,
+              "kind": "Adult",
+              "minAge": null,
+              "maxAge": null
+            }
+          ],
+          "name": "Стандартный"
+        },
+        "guests": [
+          {
+            "firstName": "Иван",
+            "lastName": "Иванов",
+            "middleName": "Иванович",
+            "citizenship": "RUS",
+            "sex": "Male"
+          }
+        ],
+        "guestCount": {
+          "adultCount": 1,
+          "childAges": [
+            5
+          ]
+        },
+        "checksum": "string",
+        "dailyRates": [
+          {
+            "priceBeforeTax": 9500,
+            "date": "2019-10-01"
+          }
+        ],
+        "total": {
+          "priceBeforeTax": 9500,
+          "taxAmount": 100,
+          "taxes": [
+            {
+              "amount": 100,
+              "index": 1
+            }
+          ]
+        },
+        "services": [
+          {
+            "id": "42965",
+            "name": "Завтрак",
+            "description": "Завтрак в ресторане по специальной цене",
+            "price": 1200,
+            "inclusive": false,
+            "kind": "Meal",
+            "mealPlanCode": "AllInclusive",
+            "mealPlanName": "Все включено"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "id": "7898",
+        "name": "Фруктовая тарелка",
+        "description": "Тарелка фруктов к заезду",
+        "price": 200
+      }
+    ],
+    "customer": {
+      "firstName": "Иван",
+      "lastName": "Иванов",
+      "middleName": "Иванович",
+      "citizenship": "RUS",
+      "contacts": {
+        "phones": [
+          {
+            "phoneNumber": "+79020000000"
+          }
+        ],
+        "emails": [
+          {
+            "emailAddress": "test@travelline.ru"
+          }
+        ]
+      }
+    },
+    "total": {
+      "priceBeforeTax": 9500,
+      "taxAmount": 100,
+      "taxes": [
+        {
+          "amount": 100,
+          "index": 1
+        }
+      ]
+    },
+    "taxes": [
+      {
+        "index": 1,
+        "name": "Курортный сбор",
+        "description": "Сбор с каждого гостя, оплата на ресепшен"
+      }
+    ],
+    "currencyCode": "RUB",
+    "cancellation": {
+      "penaltyAmount": 1200,
+      "reason": "Отмена поездки",
+      "cancelledUtc": "2019-06-20T10:41:04Z"
+    },
+    "cancellationPolicy": {
+      "freeCancellationPossible": true,
+      "freeCancellationDeadlineLocal": "2019-09-30T12:00",
+      "freeCancellationDeadlineUtc": "2019-09-30T09:00Z",
+      "penaltyAmount": 1200
+    },
+    "createBookingToken": "QUNERjMyQjctNTQyNi00NTdELTk0QzItQTU0Mjc0QTY0RThD"
+  },
+  "alternativeBooking": null,
+  "warnings": [
+    null
+  ]
+}
