@@ -4,7 +4,7 @@ namespace egik\TravellineApi\RequestDto\Reservation\Verify;
 
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\Customer;
 use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\BookingRoomStay;
-use  \egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay as RequestBookingRoomStay;
+use  egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay as RequestBookingRoomStay;
 use JetBrains\PhpStorm\Internal\TentativeType;
 
 class VerifyBookingRequest implements \JsonSerializable
@@ -33,7 +33,6 @@ class VerifyBookingRequest implements \JsonSerializable
 
     public function addService(): void
     {
-
     }
 
 

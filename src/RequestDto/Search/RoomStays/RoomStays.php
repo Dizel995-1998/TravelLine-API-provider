@@ -65,7 +65,8 @@ class RoomStays
     {
         if (count($this->propertyIds) > self::PROPERTY_IDS_COUNT_LIMIT) {
             throw new \RuntimeException(
-                'Quantity of property ids is limited %d things', self::PROPERTY_IDS_COUNT_LIMIT
+                'Quantity of property ids is limited %d things',
+                self::PROPERTY_IDS_COUNT_LIMIT
             );
         }
 

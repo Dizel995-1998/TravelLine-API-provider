@@ -37,11 +37,11 @@ class BookingRoomStay
         BookingGuestCount $guestCount,
         string $checksum
     ) {
-       $this->stayDates = $stayDates;
-       $this->ratePlan = $ratePlan;
-       $this->roomType = $roomType;
-       $this->guestCount = $guestCount;
-       $this->checksum = $checksum;
+        $this->stayDates = $stayDates;
+        $this->ratePlan = $ratePlan;
+        $this->roomType = $roomType;
+        $this->guestCount = $guestCount;
+        $this->checksum = $checksum;
     }
 
     /**
@@ -49,6 +49,5 @@ class BookingRoomStay
      */
     public function addService(): void
     {
-
     }
 }

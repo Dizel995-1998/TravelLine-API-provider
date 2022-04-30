@@ -8,6 +8,7 @@
         "php": ">=7.3.0",
         "ext-json": "*",
         "doctrine/annotations": "^1.13",
+        "friendsofphp/php-cs-fixer": "^3.8",
         "guzzlehttp/guzzle": "^7.0",
         "jworman/annotation-reader": "^1.4",
         "phpdocumentor/reflection-docblock": "^5.3",

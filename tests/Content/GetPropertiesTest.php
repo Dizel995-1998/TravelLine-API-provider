@@ -2,7 +2,6 @@
 
 namespace egik\TravellineApi\Content;
 
-
 use egik\TravellineApi\BaseTestCase;
 use egik\TravellineApi\TravelLineClient;
 

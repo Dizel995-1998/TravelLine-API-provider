@@ -311,7 +311,7 @@ class TravelLineClient
     public function searchRoomStays(RoomStays $roomStays): RoomStaysResponse
     {
         $response = $this->sendRequest('POST', '/search/v1/properties/room-stays/search', [], $roomStays);
-        return $this->hydrateResponseDto($response,RoomStaysResponse::class);
+        return $this->hydrateResponseDto($response, RoomStaysResponse::class);
     }
 
     public function createBooking(CreateBookingRequest $bookingRequest): CreatedBookingResult
@@ -323,7 +323,7 @@ class TravelLineClient
     public function verifyBooking(VerifyBookingRequest $verifyBookingRequest): VerifyBookingResult
     {
         $response = $this->sendRequest('POST', '/reservation/v1/bookings/verify', [], $verifyBookingRequest);
-        return $this->hydrateResponseDto($response,VerifyBookingResult::class);
+        return $this->hydrateResponseDto($response, VerifyBookingResult::class);
     }
 
     /**
@@ -332,7 +332,7 @@ class TravelLineClient
     public function getBooking(string $number): CreatedBookingResult
     {
         $response = $this->sendRequest('GET', '/reservation/v1/bookings/' . $number);
-        return $this->hydrateResponseDto($response,CreatedBookingResult::class);
+        return $this->hydrateResponseDto($response, CreatedBookingResult::class);
     }
 
     public function cancelBooking(string $number, string $reason, int $expectedPenaltyAmount): CreatedBookingResult
@@ -345,7 +345,7 @@ class TravelLineClient
         ];
 
         $response = $this->sendRequest('POST', $point, [], $requestBody);
-        return $this->hydrateResponseDto($response,CreatedBookingResult::class);
+        return $this->hydrateResponseDto($response, CreatedBookingResult::class);
     }
 
     /**
@@ -390,6 +390,6 @@ class TravelLineClient
 
         $point = '/search/v1/properties/' . $propertyId . '/room-stays';
         $response = $this->sendRequest('GET', $point, $queryParams, []);
-        return $this->hydrateResponseDto($response,ResponseDto\Search\RoomStaysById\RoomStays::class);
+        return $this->hydrateResponseDto($response, ResponseDto\Search\RoomStaysById\RoomStays::class);
     }
 }

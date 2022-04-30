@@ -7,5 +7,4 @@ use egik\TravellineApi\BaseTestCase;
 
 class GetBookingTest extends BaseTestCase
 {
-
 }

@@ -16,7 +16,7 @@ use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\BookingTaxAmount;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\GuestCount;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\Tax;
 use egik\TravellineApi\TravelLineClient;
-use \egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
