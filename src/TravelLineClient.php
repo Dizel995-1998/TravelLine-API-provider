@@ -200,8 +200,7 @@ class TravelLineClient
             throw new TravelLineBadResponseException($response->getBody()->getContents(), $httpResponseCode);
         }
 
-        // todo: заюзать функционал сериалайзера
-        return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+        return $this->serializer->decode($response->getBody()->getContents(), JsonEncoder::FORMAT);
     }
 
     protected function isSuccessResponse(ResponseInterface $response): bool
@@ -217,6 +216,7 @@ class TravelLineClient
      */
     protected function hydrateResponseDto(array $denormalizedData, string $toDtoClass)
     {
+        // todo: реализовать валидацию Response DTO
         if (str_ends_with($toDtoClass, '[]')) {
             $tmpClassName = str_replace('[]', '', $toDtoClass);
 
