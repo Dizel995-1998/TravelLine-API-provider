@@ -316,6 +316,53 @@ class TravelLineClient
         return $this->hydrateResponseDto($response,VerifyBookingResult::class);
     }
 
+    /**
+     * todo: узнать что возвращается если объект не найден
+     */
+    public function getBooking(string $number): CreatedBookingResult
+    {
+        $response = $this->sendRequest('GET', '/reservation/v1/bookings/' . $number);
+        return $this->hydrateResponseDto($response,CreatedBookingResult::class);
+    }
+
+    /**
+     * todo: узнать что возвращается если объект не найден
+     */
+    public function cancelBooking(string $number, string $reason, int $expectedPenaltyAmount): CreatedBookingResult
+    {
+        $point = '/reservation/v1/bookings/' . $number . '/cancel';
+
+        $requestBody = [
+            'reason' => $reason,
+            'expectedPenaltyAmount' => $expectedPenaltyAmount,
+        ];
+
+        $response = $this->sendRequest('POST', $point, [], $requestBody);
+        return $this->hydrateResponseDto($response,CreatedBookingResult::class);
+    }
+
+    /**
+     * Рассчитать сумму штрафа за отмену
+     * todo: узнать что возвращается если объект не найден
+     */
+    public function calculateCancellationPenalty(string $number, string $reason, int $expectedPenaltyAmount): int
+    {
+        $point = '/reservation/v1/bookings/' . $number . '/cancel';
+
+        $requestBody = [
+            'reason' => $reason,
+            'expectedPenaltyAmount' => $expectedPenaltyAmount,
+        ];
+
+        $response = $this->sendRequest('POST', $point, [], $requestBody);
+
+        if ($response['penaltyAmount'] === null) {
+            throw new \RuntimeException('"penaltyAmount" was not returned');
+        }
+
+        return (int) $response['penaltyAmount'];
+    }
+
     public function searchRoomStaysByPropertyId(
         string $propertyId,
         \DateTimeImmutable $arrivalDate,
