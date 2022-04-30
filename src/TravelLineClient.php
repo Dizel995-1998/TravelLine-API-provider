@@ -36,13 +36,14 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
+ * todo: задокументировать методы и добавить ссылку на флоу оформления в репу
  * todo: добавить в тестах strict type = 1 в бутстрап файле
  * todo: подключить Assert компонент для валидации респонс ДТО
  * todo: добавить GitLab CI в проект, проверка codestyle, psalm, unit tests
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
  * todo: оформить пакет как бандл
  * todo: В доке плохо описаны возвращаемые значения, уточнить у представителей TravelLine возможные коды ошибок
- * Провайдер для работы с API Travelline (https://partner.qatl.ru/docs/booking-process/)
+ * Провайдер для работы с API TravelLine (https://partner.qatl.ru/docs/booking-process/)
  */
 class TravelLineClient
 {
