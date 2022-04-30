@@ -27,8 +27,6 @@ class VerifyBookingTest extends BaseTestCase
     {
         $verifyBookingResult = $travelLineClient->verifyBooking($this->createMock(VerifyBookingRequest::class));
 
-        var_dump($verifyBookingResult->getWarnings());
-        // fixme:
         $this->assertNull($verifyBookingResult->getWarnings());
         $this->assertNull($verifyBookingResult->getAlternativeBooking());
 

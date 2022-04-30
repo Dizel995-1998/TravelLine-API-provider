@@ -14,12 +14,12 @@ class VerifyBookingResult
     /**
      * @var null|VerifyBooking
      */
-    protected $alternativeBooking;
+    protected $alternativeBooking = null;
 
     /**
      * @var null|Warning[]
      */
-    protected $warnings;
+    protected $warnings = null;
 
     /**
      * @return VerifyBooking

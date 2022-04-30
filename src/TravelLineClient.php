@@ -18,6 +18,7 @@ use egik\TravellineApi\ResponseDto\Reservation\Verify\VerifyBookingResult;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -26,6 +27,8 @@ use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * todo: добавить в тестах strict type = 1 в бутстрап файле
@@ -60,6 +63,11 @@ class TravelLineClient
      */
     protected $serializer;
 
+    /**
+     * @var ValidatorInterface
+     */
+    protected $validator;
+
     public function __construct(
         Client $httpClient,
         string $apiKey,
@@ -69,6 +77,15 @@ class TravelLineClient
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
         $this->serializer = $this->getSerializer();
+        $this->validator = $this->getValidator();
+    }
+
+    private function getValidator(): ValidatorInterface
+    {
+        return Validation::createValidatorBuilder()
+            ->enableAnnotationMapping(true)
+            ->addDefaultDoctrineAnnotationReader()
+            ->getValidator();
     }
 
     private function getSerializer(): Serializer
@@ -151,6 +168,21 @@ class TravelLineClient
     }
 
     /**
+     * @template T of DTO
+     * @param array $denormalizedData
+     * @param class-string<T> $toDtoClass
+     * @return T
+     */
+    protected function hydrateResponseDto(array $denormalizedData, string $toDtoClass)
+    {
+        $responseDto = $this->serializer->denormalize($denormalizedData, $toDtoClass, JsonEncoder::FORMAT);
+        // todo: maybe add if for array values
+        $this->validator->validate($responseDto);
+
+        return $responseDto;
+    }
+
+    /**
      *  Получения событий по всем средствам размещений.
      * @return PropertyEventsResult
      */
@@ -171,7 +203,7 @@ class TravelLineClient
         );
 
         $continue = $response['continue'] ?? null;
-        return $this->serializer->denormalize($response, PropertyEventsResult::class, JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response, PropertyEventsResult::class);
     }
 
     /**
@@ -189,7 +221,7 @@ class TravelLineClient
         ]);
 
         $since = $response['next'] ?? null;
-        return $this->serializer->denormalize($response, PropertiesResult::class, JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response, PropertiesResult::class);
     }
 
     /**
@@ -199,7 +231,7 @@ class TravelLineClient
     public function getPropertyById(string $propertyId): SpecifiedProperty
     {
         $response = $this->sendRequest('GET', '/content/v1/properties/' . $propertyId);
-        return $this->serializer->denormalize($response, SpecifiedProperty::class, JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response, SpecifiedProperty::class);
     }
 
     /**
@@ -209,7 +241,7 @@ class TravelLineClient
     public function getMealPlans(): array
     {
         $response = $this->sendRequest('GET', '/content/v1/meal-plans');
-        return $this->serializer->denormalize($response, MealPlan::class . '[]', JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response, MealPlan::class . '[]');
     }
 
     /**
@@ -219,13 +251,25 @@ class TravelLineClient
     public function getRoomTypeCategories(): array
     {
         $response = $this->sendRequest('GET', '/content/v1/room-type-categories');
-        return $this->serializer->denormalize($response, RoomTypeCategory::class . '[]', JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response, RoomTypeCategory::class . '[]');
     }
 
     public function searchRoomStays(RoomStays $roomStays): RoomStaysResponse
     {
         $response = $this->sendRequest('POST', '/search/v1/properties/room-stays/search', [], $roomStays);
-        return $this->serializer->denormalize($response, RoomStaysResponse::class, JsonEncoder::FORMAT);
+        return $this->hydrateResponseDto($response,RoomStaysResponse::class);
+    }
+
+    public function createBooking(CreateBookingRequest $bookingRequest): CreatedBookingResult
+    {
+        $response = $this->sendRequest('POST', '/reservation/v1/bookings', [], $bookingRequest);
+        return $this->hydrateResponseDto($response['booking'], CreatedBookingResult::class);
+    }
+
+    public function verifyBooking(VerifyBookingRequest $verifyBookingRequest): VerifyBookingResult
+    {
+        $response = $this->sendRequest('POST', '/reservation/v1/bookings/verify', [], $verifyBookingRequest);
+        return $this->hydrateResponseDto($response,VerifyBookingResult::class);
     }
 
     public function searchRoomStaysByPropertyId(
@@ -249,18 +293,6 @@ class TravelLineClient
 
         $point = '/search/v1/properties/' . $propertyId . '/room-stays';
         $response = $this->sendRequest('GET', $point, $queryParams, []);
-        return $this->serializer->denormalize($response, ResponseDto\Search\RoomStaysById\RoomStays::class, JsonEncoder::FORMAT);
-    }
-
-    public function createBooking(CreateBookingRequest $bookingRequest): CreatedBookingResult
-    {
-        $response = $this->sendRequest('POST', '/reservation/v1/bookings', [], $bookingRequest);
-        return $this->serializer->denormalize($response['booking'], CreatedBookingResult::class, JsonEncoder::FORMAT);
-    }
-
-    public function verifyBooking(VerifyBookingRequest $verifyBookingRequest): VerifyBookingResult
-    {
-        $response = $this->sendRequest('POST', '/reservation/v1/bookings/verify', [], $verifyBookingRequest);
-        return $this->serializer->denormalize($response, VerifyBookingResult::class, JsonEncoder::FORMAT, [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+        return $this->hydrateResponseDto($response,ResponseDto\Search\RoomStaysById\RoomStays::class);
     }
 }

@@ -2,14 +2,18 @@
 
 namespace egik\TravellineApi\ResponseDto\Search\RoomStays;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class Warning
 {
     /**
+     * @Assert\NotBlank
      * @var string
      */
     protected $code;
 
     /**
+     * @Assert\NotBlank
      * @var string
      */
     protected $message;
