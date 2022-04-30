@@ -145,7 +145,7 @@ class VerifyBookingTest extends BaseTestCase
         $guzzleClientMock
             ->method('request')
             ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
-                $this->assertEquals($referenceRequest, $options['body']);
+                $this->assertEquals($referenceRequest, $options['json']);
                 return new Response(200, [], json_encode(['booking' => []]));
             });
 

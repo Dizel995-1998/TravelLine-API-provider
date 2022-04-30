@@ -142,26 +142,28 @@ class CreateBookingTest extends BaseTestCase
     public function testSuccessRequest(): void
     {
         $referenceRequest = [
-            'propertyId' => 1066,
-            'roomStays' => [],
-            'customer' => [
-                'firstName' => 'John',
-                'lastName' =>'Dark',
-                'citizenship' => 'RUS',
-                'contacts' => [
-                    'phones' => [
-                        [
-                            'phoneNumber' => '8988 555 44 11',
+            'booking' => [
+                'propertyId' => '1066',
+                'roomStays' => [],
+                'customer' => [
+                    'firstName' => 'John',
+                    'lastName' =>'Dark',
+                    'citizenship' => 'RUS',
+                    'contacts' => [
+                        'phones' => [
+                            [
+                                'phoneNumber' => '8988 555 44 11',
+                            ],
+                        ],
+                        'emails' => [
+                            [
+                                'emailAddress' => 'test@mail.ru',
+                            ]
                         ],
                     ],
-                    'emails' => [
-                        [
-                            'emailAddress' => 'test@mail.ru',
-                        ]
-                    ],
                 ],
+                'createBookingToken' => '111'
             ],
-            'createBookingToken' => '111'
         ];
 
         $guzzleClientMock =
@@ -170,7 +172,7 @@ class CreateBookingTest extends BaseTestCase
         $guzzleClientMock
             ->method('request')
             ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
-                $this->assertEquals($referenceRequest, $options['body']);
+                $this->assertEquals($referenceRequest, $options['json']);
                 return new Response(200, [], json_encode(['booking' => []]));
             });
 
@@ -179,7 +181,7 @@ class CreateBookingTest extends BaseTestCase
         $customer = new Customer('John', 'Dark', 'RUS', $personContacts);
         $roomStays = [];
 
-        $bookingRequest = new CreateBookingRequest(1066, $roomStays, $customer, '111');
+        $bookingRequest = new CreateBookingRequest('1066', $roomStays, $customer, '111');
 
         $travelLineClient->createBooking($bookingRequest);
     }

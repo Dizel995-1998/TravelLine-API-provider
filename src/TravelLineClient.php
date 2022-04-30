@@ -179,16 +179,21 @@ class TravelLineClient
             ]);
         }
 
-        $response = $this->httpClient->request($httpMethod, $this->baseUrl . $endpoint, [
-            'headers' => [
-                'X-API-KEY' => $this->apiKey,
-            ],
-            'body' => $requestBody, // todo: maybe json key?
+        $options = [
+            'headers' => ['X-API-KEY' => $this->apiKey],
             'http_errors' => false,
-            'query' => $queryParams,
-            'timeout' => 60,
-        ]);
+//            'timeout' => 60,
+        ];
 
+        if (!empty($requestBody)) {
+            $options['json'] = $requestBody;
+        }
+
+        if ($queryParams !== null) {
+            $options['query'] = $queryParams;
+        }
+
+        $response = $this->httpClient->request($httpMethod, $this->baseUrl . $endpoint, $options);
         $httpResponseCode = $response->getStatusCode();
 
         if ($throwExceptionWhenFail === true && !$this->isSuccessResponse($response)) {
@@ -317,7 +322,7 @@ class TravelLineClient
     }
 
     /**
-     * todo: узнать что возвращается если объект не найден
+     * todo: Уточнить всегда ли TravelLine возвращает 400-ый код если ресурс не найден, либо же использует как то ещё
      */
     public function getBooking(string $number): CreatedBookingResult
     {
@@ -325,9 +330,6 @@ class TravelLineClient
         return $this->hydrateResponseDto($response,CreatedBookingResult::class);
     }
 
-    /**
-     * todo: узнать что возвращается если объект не найден
-     */
     public function cancelBooking(string $number, string $reason, int $expectedPenaltyAmount): CreatedBookingResult
     {
         $point = '/reservation/v1/bookings/' . $number . '/cancel';
@@ -343,7 +345,6 @@ class TravelLineClient
 
     /**
      * Рассчитать сумму штрафа за отмену
-     * todo: узнать что возвращается если объект не найден
      */
     public function calculateCancellationPenalty(string $number, string $reason, int $expectedPenaltyAmount): int
     {

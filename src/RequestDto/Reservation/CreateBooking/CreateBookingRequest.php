@@ -3,11 +3,12 @@
 namespace egik\TravellineApi\RequestDto\Reservation\CreateBooking;
 
 // todo: realize services
-class CreateBookingRequest
+
+class CreateBookingRequest implements \JsonSerializable
 {
     /**
      * Идентификатор средства размещения
-     * @var int
+     * @var string
      */
     protected $propertyId;
 
@@ -27,11 +28,24 @@ class CreateBookingRequest
      */
     protected $createBookingToken;
 
-    public function __construct(int $propertyId, array $roomStays, Customer $customer, string $createBookingToken)
+    public function __construct(string $propertyId, array $roomStays, Customer $customer, string $createBookingToken)
     {
         $this->propertyId = $propertyId;
         $this->roomStays = $roomStays;
         $this->customer = $customer;
         $this->createBookingToken = $createBookingToken;
+    }
+
+
+    public function jsonSerialize()
+    {
+        return [
+            'booking' => [
+                'propertyId' => $this->propertyId,
+                'roomStays' => $this->roomStays,
+                'customer' => $this->customer,
+                'createBookingToken' => $this->createBookingToken,
+            ],
+        ];
     }
 }
