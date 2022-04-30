@@ -17,8 +17,8 @@ use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\CreatedBookingResul
 use egik\TravellineApi\ResponseDto\Reservation\Verify\VerifyBookingResult;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
+use JsonSchema\Exception\ValidationException;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -27,6 +27,10 @@ use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\PropertyMetadataInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -77,15 +81,46 @@ class TravelLineClient
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
         $this->serializer = $this->getSerializer();
-        $this->validator = $this->getValidator();
     }
 
-    private function getValidator(): ValidatorInterface
+    private function validate(string $dtoClassName, array $denormalizedData): void
     {
-        return Validation::createValidatorBuilder()
+        /** @psalm-suppress TooManyArguments */
+        $validator = Validation::createValidatorBuilder()
             ->enableAnnotationMapping(true)
             ->addDefaultDoctrineAnnotationReader()
             ->getValidator();
+
+        /** @var ClassMetadata $metadata */
+        $metadata = $validator->getMetadataFor($dtoClassName);
+        $constraints = [];
+
+        foreach ($metadata->getConstrainedProperties() as $propertyName) {
+            $propertyMetadata = $metadata->getPropertyMetadata($propertyName);
+            if (!empty($propertyMetadata)) {
+                $propertyMetadata = current($propertyMetadata);
+            }
+            if (!($propertyMetadata instanceof PropertyMetadataInterface)) {
+                continue;
+            }
+            $constraints[$propertyMetadata->getPropertyName()] = $propertyMetadata->getConstraints();
+        }
+
+        $constraintCollection = new Collection($constraints);
+        $constraintCollection->allowExtraFields = true;
+
+        $errors = [];
+
+        /** @var ConstraintViolationInterface $violation */
+        foreach ($validator->validate($denormalizedData, $constraintCollection) as $violation) {
+            $field = preg_replace(['/\]\[/', '/\[|\]/'], ['.', ''], $violation->getPropertyPath());
+            $errors[$field] = $violation->getMessage();
+        }
+
+        if (!empty($errors)) {
+            // todo: временный костыль
+            throw new \RuntimeException(implode(PHP_EOL, $errors));
+        }
     }
 
     private function getSerializer(): Serializer
@@ -175,12 +210,19 @@ class TravelLineClient
      */
     protected function hydrateResponseDto(array $denormalizedData, string $toDtoClass)
     {
-        $responseDto = $this->serializer->denormalize($denormalizedData, $toDtoClass, JsonEncoder::FORMAT);
-        // todo: maybe add if for array values
-        $this->validator->validate($responseDto);
+        if (str_ends_with($toDtoClass, '[]')) {
+            $tmpClassName = str_replace('[]', '', $toDtoClass);
 
-        return $responseDto;
+            foreach ($denormalizedData as $dataItem) {
+                $this->validate($tmpClassName, $dataItem);
+            }
+        } else {
+            $this->validate($toDtoClass, $denormalizedData);
+        }
+
+        return $this->serializer->denormalize($denormalizedData, $toDtoClass, JsonEncoder::FORMAT);
     }
+
 
     /**
      *  Получения событий по всем средствам размещений.

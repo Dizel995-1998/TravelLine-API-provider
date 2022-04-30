@@ -7,13 +7,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Warning
 {
     /**
-     * @Assert\NotBlank
+     * @Assert\NotNull
      * @var string
      */
     protected $code;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotNull
      * @var string
      */
     protected $message;

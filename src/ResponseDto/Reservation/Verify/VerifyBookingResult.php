@@ -3,20 +3,24 @@
 namespace egik\TravellineApi\ResponseDto\Reservation\Verify;
 
 use egik\TravellineApi\ResponseDto\Search\RoomStays\Warning;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class VerifyBookingResult
 {
     /**
+     * @Assert\Valid()
      * @var VerifyBooking
      */
     protected $booking;
 
     /**
+     * @Assert\Valid()
      * @var null|VerifyBooking
      */
     protected $alternativeBooking = null;
 
     /**
+     * @Assert\Valid()
      * @var null|Warning[]
      */
     protected $warnings = null;
