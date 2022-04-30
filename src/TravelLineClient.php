@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -128,8 +129,9 @@ class TravelLineClient
         $arrayDenormalized = new ArrayDenormalizer();
         $propertyNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
         $arrayDenormalized->setDenormalizer($propertyNormalizer);
+        $dateTimeNormalizer = new DateTimeNormalizer();
 
-        return new Serializer([$arrayDenormalized, new JsonSerializableNormalizer(), $propertyNormalizer], [new JsonEncoder()]);
+        return new Serializer([$arrayDenormalized, new JsonSerializableNormalizer(), $propertyNormalizer, $dateTimeNormalizer], [new JsonEncoder()]);
     }
 
     private function deleteLastSlashIfNeed(string $baseUrl): string

@@ -2,15 +2,15 @@
 
 namespace egik\TravellineApi\RequestDto\Reservation\Verify;
 
-class BookingRatePlan
+class BookingPlacement
 {
     /**
      * @var string
      */
-    protected $id;
+    protected $code;
 
-    public function __construct(int $id)
+    public function __construct(string $code)
     {
-        $this->id = $id;
+        $this->code = $code;
     }
 }

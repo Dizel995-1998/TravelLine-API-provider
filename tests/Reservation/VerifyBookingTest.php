@@ -17,6 +17,8 @@ use egik\TravellineApi\ResponseDto\Search\RoomStays\GuestCount;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\Tax;
 use egik\TravellineApi\TravelLineClient;
 use \egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 class VerifyBookingTest extends BaseTestCase
 {
@@ -27,6 +29,7 @@ class VerifyBookingTest extends BaseTestCase
     {
         $verifyBookingResult = $travelLineClient->verifyBooking($this->createMock(VerifyBookingRequest::class));
 
+        // TODO: баг с null в массиве, поправить работу денормалайзера с определеним null типа
         $this->assertNull($verifyBookingResult->getWarnings());
         $this->assertNull($verifyBookingResult->getAlternativeBooking());
 
@@ -81,11 +84,47 @@ class VerifyBookingTest extends BaseTestCase
         $this->assertEquals('QUNERjMyQjctNTQyNi00NTdELTk0QzItQTU0Mjc0QTY0RThD', $booking->getCreateBookingToken());
     }
 
-//    public function testSuccessRequest(): void
-//    {
-//        $customer = new Customer('John', 'Franko', 'RUS', new BookingPersonContacts(['8988 444 22 11'], ['test@mail.ru']));
-//        $bookingStayDates = new BookingStayDates(new \DateTimeImmutable(), new \DateTimeImmutable());
-//        $bookingRoomStay = new BookingRoomStay($bookingStayDates, new BookingRatePlan(), new BookingRoomType(), new BookingGuestCount(), '111111');
-//        $bookingVerifyRequest = new VerifyBookingRequest('111', $customer, $bookingRoomStay);
-//    }
+    public function testSuccessRequest(): void
+    {
+        $customer = new Customer('John', 'Franko', 'RUS', new BookingPersonContacts(['8988 444 22 11'], ['test@mail.ru']));
+        $bookingStayDates = new BookingStayDates(new \DateTimeImmutable(), new \DateTimeImmutable());
+        $bookingRoomStay = new BookingRoomStay($bookingStayDates, new BookingRatePlan(1), new BookingRoomType(2, ...[]), new BookingGuestCount(55, ...[11, 15]), '111111');
+        $bookingVerifyRequest = new VerifyBookingRequest('111', $customer, $bookingRoomStay);
+
+        $referenceRequest = [
+            'propertyId' => 1066,
+            'roomStays' => [],
+            'customer' => [
+                'firstName' => 'John',
+                'lastName' =>'Dark',
+                'citizenship' => 'RUS',
+                'contacts' => [
+                    'phones' => [
+                        [
+                            'phoneNumber' => '8988 555 44 11',
+                        ],
+                    ],
+                    'emails' => [
+                        [
+                            'emailAddress' => 'test@mail.ru',
+                        ]
+                    ],
+                ],
+            ],
+            'createBookingToken' => '111'
+        ];
+
+        $guzzleClientMock =
+            $this->createMock(Client::class);
+
+        $guzzleClientMock
+            ->method('request')
+            ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
+                $this->assertEquals($referenceRequest, $options['body']);
+                return new Response(200, [], json_encode(['booking' => []]));
+            });
+
+        $travelLineClient = new TravelLineClient($guzzleClientMock, '111');
+        $travelLineClient->verifyBooking($bookingVerifyRequest);
+    }
 }
