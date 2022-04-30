@@ -180,6 +180,10 @@ class TravelLineClient
             ]);
         }
 
+        if (!empty($requestBody) && strtolower($httpMethod) === 'GET') {
+            throw new \LogicException('Невозможно отправить тело запроса используя GET глагол');
+        }
+
         $options = [
             'headers' => ['X-API-KEY' => $this->apiKey],
             'http_errors' => false,
