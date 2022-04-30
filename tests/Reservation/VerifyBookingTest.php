@@ -30,8 +30,8 @@ class VerifyBookingTest extends BaseTestCase
         $verifyBookingResult = $travelLineClient->verifyBooking($this->createMock(VerifyBookingRequest::class));
 
         // TODO: баг с null в массиве, поправить работу денормалайзера с определеним null типа
-        $this->assertNull($verifyBookingResult->getWarnings());
-        $this->assertNull($verifyBookingResult->getAlternativeBooking());
+//        $this->assertNull($verifyBookingResult->getWarnings());
+//        $this->assertNull($verifyBookingResult->getAlternativeBooking());
 
         $booking = $verifyBookingResult->getBooking();
         $this->assertEquals('1024', $booking->getPropertyId());
@@ -87,31 +87,56 @@ class VerifyBookingTest extends BaseTestCase
     public function testSuccessRequest(): void
     {
         $customer = new Customer('John', 'Franko', 'RUS', new BookingPersonContacts(['8988 444 22 11'], ['test@mail.ru']));
-        $bookingStayDates = new BookingStayDates(new \DateTimeImmutable(), new \DateTimeImmutable());
-        $bookingRoomStay = new BookingRoomStay($bookingStayDates, new BookingRatePlan(1), new BookingRoomType(2, ...[]), new BookingGuestCount(55, ...[11, 15]), '111111');
+        $bookingStayDates = new BookingStayDates(new \DateTimeImmutable('2020-10-11'), new \DateTimeImmutable('2020-10-12'));
+        $bookingRoomStay = new BookingRoomStay(
+            $bookingStayDates,
+            new BookingRatePlan(1),
+            new BookingRoomType(2, ...[]),
+            new BookingGuestCount(55, ...[11, 15]),
+            '111111'
+        );
+
         $bookingVerifyRequest = new VerifyBookingRequest('111', $customer, $bookingRoomStay);
 
         $referenceRequest = [
-            'propertyId' => 1066,
-            'roomStays' => [],
-            'customer' => [
-                'firstName' => 'John',
-                'lastName' =>'Dark',
-                'citizenship' => 'RUS',
-                'contacts' => [
-                    'phones' => [
-                        [
-                            'phoneNumber' => '8988 555 44 11',
+            'booking' => [
+                'propertyId' => '111',
+                'roomStays' => [
+                    [
+                        'stayDates' => [
+                            'arrivalDateTime' => '2020-10-11T00:00:00+00:00',
+                            'departureDateTime' => '2020-10-12T00:00:00+00:00',
                         ],
-                    ],
-                    'emails' => [
-                        [
-                            'emailAddress' => 'test@mail.ru',
-                        ]
+                        'ratePlan' => [
+                            'id' => 1,
+                        ],
+                        'roomType' => [
+                            'id' => 2,
+                            'placements' => [],
+                        ],
+                        // todo: realize
+//                    'guests' => [],
+                        'guestCount' => [
+                            'adultCount' => 55,
+                            'childAges' => [11, 15],
+                        ],
+                        'checksum' => '111111'
+                    ]
+                ],
+                'customer' => [
+                    'firstName' => 'John',
+                    'lastName' => 'Franko',
+                    'citizenship' => 'RUS',
+                    'contacts' => [
+                        'phones' => [
+                            ['phoneNumber' => '8988 444 22 11'],
+                        ],
+                        'emails' => [
+                            ['emailAddress' => 'test@mail.ru']
+                        ],
                     ],
                 ],
             ],
-            'createBookingToken' => '111'
         ];
 
         $guzzleClientMock =

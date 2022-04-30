@@ -120,7 +120,7 @@ class TravelLineClient
 
         if (!empty($errors)) {
             // todo: временный костыль
-            throw new \RuntimeException(implode(PHP_EOL, $errors));
+            throw new \RuntimeException(json_encode($errors));
         }
     }
 

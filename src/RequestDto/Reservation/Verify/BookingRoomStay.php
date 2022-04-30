@@ -29,6 +29,7 @@ class BookingRoomStay
      */
     protected $checksum;
 
+    // todo: where is BookingGuest?
     public function __construct(
         BookingStayDates $stayDates,
         BookingRatePlan $ratePlan,

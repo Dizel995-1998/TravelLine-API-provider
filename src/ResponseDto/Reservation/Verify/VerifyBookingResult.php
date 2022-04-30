@@ -14,13 +14,11 @@ class VerifyBookingResult
     protected $booking;
 
     /**
-     * @Assert\Valid()
      * @var null|VerifyBooking
      */
     protected $alternativeBooking = null;
 
     /**
-     * @Assert\Valid()
      * @var null|Warning[]
      */
     protected $warnings = null;
