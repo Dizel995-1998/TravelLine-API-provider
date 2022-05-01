@@ -30,9 +30,8 @@ class VerifyBookingTest extends BaseTestCase
     {
         $verifyBookingResult = $travelLineClient->verifyBooking($this->createMock(VerifyBookingRequest::class));
 
-        // TODO: баг с null в массиве, поправить работу денормалайзера с определеним null типа
-//        $this->assertNull($verifyBookingResult->getWarnings());
-//        $this->assertNull($verifyBookingResult->getAlternativeBooking());
+        $this->assertNull($verifyBookingResult->getWarnings());
+        $this->assertNull($verifyBookingResult->getAlternativeBooking());
 
         $booking = $verifyBookingResult->getBooking();
         $this->assertEquals('1024', $booking->getPropertyId());

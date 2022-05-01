@@ -9,7 +9,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class EmptyValueNormalizerDecorator implements  NormalizerInterface, DenormalizerInterface, SerializerAwareInterface, CacheableSupportsMethodInterface
+class EmptyValueNormalizerDecorator implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface,
+                                               CacheableSupportsMethodInterface
 {
     /**
      * @var AbstractNormalizer
@@ -21,13 +22,31 @@ class EmptyValueNormalizerDecorator implements  NormalizerInterface, Denormalize
         $this->normalizer = $normalizer;
     }
 
-    public function normalize($object, string $format = null, array $context = [])
+    private function array_filter_recursive(array $input, callable $callback): array
     {
-        $filterFunc = function ($item) {
-            return !empty($item);
+        foreach ($input as &$value) {
+            if (!is_array($value)) {
+                continue;
+            }
+
+            $value = $this->array_filter_recursive($value, $callback);
+        }
+
+        return array_filter($input, $callback);
+    }
+
+    private function filterEmptyValues($data): array
+    {
+        $filterFunc = function ($value) {
+            return !empty($value);
         };
 
-        return array_filter($this->normalizer->normalize($object, $format, $context), $filterFunc);
+        return $this->array_filter_recursive($data, $filterFunc);
+    }
+
+    public function normalize($object, string $format = null, array $context = [])
+    {
+        return $this->filterEmptyValues($this->normalizer->normalize($object, $format, $context));
     }
 
     public function supportsNormalization($data, string $format = null)
@@ -42,7 +61,7 @@ class EmptyValueNormalizerDecorator implements  NormalizerInterface, Denormalize
 
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        return $this->normalizer->denormalize($data, $type, $format, $context);
+        return $this->normalizer->denormalize($this->filterEmptyValues($data), $type, $format, $context);
     }
 
     public function supportsDenormalization($data, string $type, string $format = null)
