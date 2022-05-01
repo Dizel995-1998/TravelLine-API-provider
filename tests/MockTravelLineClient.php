@@ -6,11 +6,13 @@ use egik\TravellineApi\ResponseDto\Content\SpecifiedProperty\Property as Specifi
 
 class MockTravelLineClient extends TravelLineClient
 {
-    private function getPathToMockFile(string $url): string
+    private function getPathToMockFile(string $httpMethod, string $url): string
     {
+        $httpMethod = strtoupper($httpMethod);
+
         $urlParts = explode('/', $url);
         array_shift($urlParts);
-        return implode('_', $urlParts) . '.json';
+        return $httpMethod . '_' . implode('_', $urlParts) . '.json';
     }
 
     public function getPropertyById(string $propertyId): SpecifiedProperty
@@ -36,7 +38,7 @@ class MockTravelLineClient extends TravelLineClient
             ));
         }
 
-        $pathToMockResponse = __DIR__ . '/MockResponses/' . $this->getPathToMockFile($endpoint);
+        $pathToMockResponse = __DIR__ . '/MockResponses/' . $this->getPathToMockFile($httpMethod, $endpoint);
 
         if (!file_exists($pathToMockResponse)) {
             throw new \RuntimeException('Cant find mock response ' . $pathToMockResponse);
