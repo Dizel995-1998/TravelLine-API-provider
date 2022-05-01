@@ -102,6 +102,7 @@ class SearchRoomStaysTest extends BaseTestCase
         }
     }
 
+    // todo: реализовать базовый метод для проверки работоспособности реквест методов
     public function testRequestSuccess(): void
     {
         $arrivalDate =  new \DateTimeImmutable('2019-10-01 15:45');
@@ -120,7 +121,9 @@ class SearchRoomStaysTest extends BaseTestCase
             ->method('request')
             ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
                 $this->assertEquals($referenceRequest, $options['json']);
-                return new Response(200);
+
+                // todo: заменить реальным моком
+                return new Response(200, [], json_encode(['some_json_key' => 'some_json_value']));
             });
 
         $travelLineClient = new TravelLineClient($guzzleClientMock, '111');

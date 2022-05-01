@@ -3,6 +3,7 @@
 namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
+use egik\TravellineApi\DenormalizerDecorator\EmptyValueNormalizerDecorator;
 use egik\TravellineApi\Normalizer\PropertyNormalizerDecorator;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
@@ -132,10 +133,15 @@ class TravelLineClient
     {
         $arrayDenormalized = new ArrayDenormalizer();
         $propertyNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
-        $arrayDenormalized->setDenormalizer($propertyNormalizer);
+
+        $emptyValueNormalizer = new EmptyValueNormalizerDecorator($propertyNormalizer);
+
+        $arrayDenormalized->setDenormalizer($emptyValueNormalizer);
         $dateTimeNormalizer = new DateTimeNormalizer([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d']);
 
-        return new Serializer([$arrayDenormalized, new JsonSerializableNormalizer(), $propertyNormalizer, $dateTimeNormalizer], [new JsonEncoder()]);
+        $jsonSerializble = new EmptyValueNormalizerDecorator(new JsonSerializableNormalizer());
+
+        return new Serializer([$arrayDenormalized, $jsonSerializble, $emptyValueNormalizer, $dateTimeNormalizer], [new JsonEncoder()]);
     }
 
     private function deleteLastSlashIfNeed(string $baseUrl): string
