@@ -9,8 +9,11 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class EmptyValueNormalizerDecorator implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface,
-                                               CacheableSupportsMethodInterface
+class EmptyValueNormalizerDecorator implements
+    NormalizerInterface,
+    DenormalizerInterface,
+    SerializerAwareInterface,
+    CacheableSupportsMethodInterface
 {
     /**
      * @var AbstractNormalizer
