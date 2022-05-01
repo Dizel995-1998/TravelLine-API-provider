@@ -5,31 +5,40 @@ namespace egik\TravellineApi\ResponseDto\Search\RoomStays;
 class RoomStays
 {
     /**
-     * @var RoomStay[]
+     * @var RoomStay[]|null
      */
     protected $roomStays;
 
     /**
-     * @var Content
+     * @var Content|null
      */
     protected $content;
 
     /**
-     * @var Warning[]
+     * @var Warning[]|null
      */
     protected $warnings;
 
-    public function getRoomStays(): array
+    /**
+     * @return RoomStay[]|null
+     */
+    public function getRoomStays(): ?array
     {
         return $this->roomStays;
     }
 
-    public function getContent(): Content
+    /**
+     * @return Content|null
+     */
+    public function getContent(): ?Content
     {
         return $this->content;
     }
 
-    public function getWarnings(): array
+    /**
+     * @return Warning[]|null
+     */
+    public function getWarnings(): ?array
     {
         return $this->warnings;
     }
