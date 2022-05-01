@@ -2,34 +2,41 @@
 
 namespace egik\TravellineApi\ResponseDto\Reservation\CreateBooking;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class RoomStayService
 {
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $id;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $name;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $description;
 
     /**
-     * @var float
+     * @var float|null
      */
     protected $price;
 
     /**
+     * @Assert\NotNull()
      * @var bool
      */
     protected $inclusive;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     protected $kind;
@@ -69,9 +76,9 @@ class RoomStayService
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }

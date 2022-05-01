@@ -41,7 +41,15 @@ class EmptyValueNormalizerDecorator implements
     private function filterEmptyValues($data): array
     {
         $filterFunc = function ($value) {
-            return !empty($value);
+            if (is_array($value) && empty($value)) {
+                return false;
+            }
+
+            if ($value === null) {
+                return false;
+            }
+
+            return true;
         };
 
         return $this->array_filter_recursive($data, $filterFunc);

@@ -319,7 +319,7 @@ class TravelLineClient
 
     public function searchRoomStays(RoomStays $roomStays): RoomStaysResponse
     {
-        $response = $this->sendRequest('GET', '/search/v1/properties/room-stays/search', [], $roomStays);
+        $response = $this->sendRequest('POST', '/search/v1/properties/room-stays/search', [], $roomStays);
         return $this->hydrateResponseDto($response, RoomStaysResponse::class);
     }
 

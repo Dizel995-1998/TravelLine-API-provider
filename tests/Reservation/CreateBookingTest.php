@@ -144,7 +144,6 @@ class CreateBookingTest extends BaseTestCase
         $referenceRequest = [
             'booking' => [
                 'propertyId' => '1066',
-                'roomStays' => [],
                 'customer' => [
                     'firstName' => 'John',
                     'lastName' =>'Dark',
