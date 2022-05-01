@@ -3,8 +3,18 @@
 namespace egik\TravellineApi\Search;
 
 use egik\TravellineApi\BaseTestCase;
+use egik\TravellineApi\RequestDto\Reservation\CreateBooking\BookingPersonContacts;
+use egik\TravellineApi\RequestDto\Reservation\CreateBooking\Customer;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingGuestCount;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRatePlan;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomStay;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomType;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingStayDates;
+use egik\TravellineApi\RequestDto\Reservation\Verify\VerifyBookingRequest;
 use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
 use egik\TravellineApi\TravelLineClient;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 class SearchRoomStaysTest extends BaseTestCase
 {
@@ -90,5 +100,30 @@ class SearchRoomStaysTest extends BaseTestCase
             $this->assertEquals('NotEnoughRights', $warning->getCode());
             $this->assertEquals('Not enough rights to hotel', $warning->getMessage());
         }
+    }
+
+    public function testRequestSuccess(): void
+    {
+        $arrivalDate =  new \DateTimeImmutable('2019-10-01 15:45');
+        $roomStaysRequest = new RoomStays(1, $arrivalDate, new \DateTimeImmutable('2019-10-15 17:20:11'));
+
+        $referenceRequest = [
+            'adults' => 1,
+            'arrivalDate' => '2019-10-01',
+            'departureDate' => '2019-10-15',
+        ];
+
+        $guzzleClientMock =
+            $this->createMock(Client::class);
+
+        $guzzleClientMock
+            ->method('request')
+            ->willReturnCallback(function (string $method, $uri = '', array $options = []) use ($referenceRequest) {
+                $this->assertEquals($referenceRequest, $options['json']);
+                return new Response(200);
+            });
+
+        $travelLineClient = new TravelLineClient($guzzleClientMock, '111');
+        $travelLineClient->searchRoomStays($roomStaysRequest);
     }
 }

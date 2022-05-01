@@ -2,7 +2,7 @@
 
 namespace egik\TravellineApi\RequestDto\Search\RoomStays;
 
-class RoomStays
+class RoomStays implements \JsonSerializable
 {
     /**
      * Ограничение на стороне API TravelLine
@@ -22,14 +22,15 @@ class RoomStays
     protected $childAges = [];
 
     /**
+     * todo: Enum
      * Добавить в ответ допольнительную информацию о категориях и тарифах
      * по умолчанию пустой, но можно принимать значения:
      * roomTypeShortContent - только контент по категорим
      * ratePlanShortContent - только контент по тарифам
      * roomTypeShortContent|ratePlanShortContent - контент по категориям и тарифам
-     * @var bool
+     * @var bool|null
      */
-    protected $include;
+    protected $includeRoomTypeShortContent;
 
     /**
      * Дата заезда ISO-8601 YYYY-MM-DD
@@ -53,10 +54,10 @@ class RoomStays
         int $adults,
         \DateTimeImmutable $arrivalDate,
         \DateTimeImmutable $departureDate,
-        bool $include = true
+        ?bool $includeRoomTypeShortContent = null
     ) {
         $this->adults = $adults;
-        $this->include = $include;
+        $this->includeRoomTypeShortContent = $includeRoomTypeShortContent;
         $this->arrivalDate = $arrivalDate;
         $this->departureDate = $departureDate;
     }
@@ -88,8 +89,22 @@ class RoomStays
         $this->childAges = $childAges;
     }
 
-    public function setInclude(bool $include): void
+    public function jsonSerialize()
     {
-        $this->include = $include;
+        $json = [
+            'propertyIds' => $this->propertyIds,
+            'adults' => $this->adults,
+            'arrivalDate' => $this->arrivalDate,
+            'departureDate' => $this->departureDate,
+            'childAges' => $this->childAges,
+        ];
+
+        if ($this->includeRoomTypeShortContent !== null) {
+            $json['include'] = $this->includeRoomTypeShortContent ?
+                'roomTypeShortContent' :
+                'ratePlanShortContent';
+        }
+
+        return $json;
     }
 }
