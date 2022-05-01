@@ -7,6 +7,7 @@ use egik\TravellineApi\RequestDto\Reservation\CreateBooking\BookingPersonContact
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\Customer;
 use egik\TravellineApi\RequestDto\Reservation\Verify\BookingGuestCount;
+use egik\TravellineApi\RequestDto\Reservation\Verify\BookingPlacement;
 use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRatePlan;
 use egik\TravellineApi\RequestDto\Reservation\Verify\BookingRoomType;
 use egik\TravellineApi\RequestDto\Reservation\Verify\BookingStayDates;
@@ -88,10 +89,12 @@ class VerifyBookingTest extends BaseTestCase
     {
         $customer = new Customer('John', 'Franko', 'RUS', new BookingPersonContacts(['8988 444 22 11'], ['test@mail.ru']));
         $bookingStayDates = new BookingStayDates(new \DateTimeImmutable('2020-10-11'), new \DateTimeImmutable('2020-10-12'));
+        $placements = [new BookingPlacement('1111')];
+
         $bookingRoomStay = new BookingRoomStay(
             $bookingStayDates,
             new BookingRatePlan(1),
-            new BookingRoomType(2, ...[]),
+            new BookingRoomType(2, ...$placements),
             new BookingGuestCount(55, ...[11, 15]),
             '111111'
         );
@@ -104,15 +107,19 @@ class VerifyBookingTest extends BaseTestCase
                 'roomStays' => [
                     [
                         'stayDates' => [
-                            'arrivalDateTime' => '2020-10-11T00:00:00+00:00',
-                            'departureDateTime' => '2020-10-12T00:00:00+00:00',
+                            'arrivalDateTime' => '2020-10-11T00:00',
+                            'departureDateTime' => '2020-10-12T00:00',
                         ],
                         'ratePlan' => [
                             'id' => 1,
                         ],
                         'roomType' => [
                             'id' => 2,
-                            'placements' => [],
+                            'placements' => [
+                                [
+                                    'code' => '1111'
+                                ]
+                            ],
                         ],
                         // todo: realize
 //                    'guests' => [],

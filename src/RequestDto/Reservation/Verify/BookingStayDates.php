@@ -2,7 +2,9 @@
 
 namespace egik\TravellineApi\RequestDto\Reservation\Verify;
 
-class BookingStayDates
+use JetBrains\PhpStorm\Internal\TentativeType;
+
+class BookingStayDates implements \JsonSerializable
 {
     /**
      * @var \DateTimeImmutable
@@ -18,5 +20,14 @@ class BookingStayDates
     {
         $this->arrivalDateTime = $arrivalDateTime;
         $this->departureDateTime = $departureDateTime;
+    }
+
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'arrivalDateTime' => $this->arrivalDateTime->format('Y-m-d\TH:i'),
+            'departureDateTime' => $this->departureDateTime->format('Y-m-d\TH:i'),
+        ];
     }
 }

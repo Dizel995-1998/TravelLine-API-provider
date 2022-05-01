@@ -19,6 +19,10 @@ class BookingRoomType
 
     public function __construct(int $id, BookingPlacement ...$placements)
     {
+        if (empty($placements)) {
+            throw new \InvalidArgumentException('Placements is required argument');
+        }
+
         $this->id = $id;
         $this->placements = $placements;
     }
