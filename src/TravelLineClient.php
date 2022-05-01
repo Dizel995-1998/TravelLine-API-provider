@@ -4,7 +4,6 @@ namespace egik\TravellineApi;
 
 // todo: разобраться с нейм спейсами
 use egik\TravellineApi\DenormalizerDecorator\EmptyValueNormalizerDecorator;
-use egik\TravellineApi\Normalizer\PropertyNormalizerDecorator;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Reservation\Verify\VerifyBookingRequest;
@@ -18,11 +17,9 @@ use egik\TravellineApi\ResponseDto\Reservation\CreateBooking\CreatedBookingResul
 use egik\TravellineApi\ResponseDto\Reservation\Verify\VerifyBookingResult;
 use egik\TravellineApi\ResponseDto\Search\RoomStays\RoomStays as RoomStaysResponse;
 use GuzzleHttp\Client;
-use JsonSchema\Exception\ValidationException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -38,14 +35,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * todo: добавить оставшейся JSON моки респонсов в папочку тестов
- * todo: разобраться с warning: [null]
- * todo: добавить в моки префикс HTTP метода
  * todo: задокументировать методы и добавить ссылку на флоу оформления в репу
  * todo: добавить в тестах strict type = 1 в бутстрап файле
  * todo: подключить Assert компонент для валидации респонс ДТО
  * todo: добавить GitLab CI в проект, проверка codestyle, psalm, unit tests
  * todo: подтянул лишние composer зависимости, посмотреть что юзаю, что нет
- * todo: оформить пакет как бандл
  * todo: В доке плохо описаны возвращаемые значения, уточнить у представителей TravelLine возможные коды ошибок
  * Провайдер для работы с API TravelLine (https://partner.qatl.ru/docs/booking-process/)
  */
