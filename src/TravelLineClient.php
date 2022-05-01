@@ -133,7 +133,7 @@ class TravelLineClient
         $arrayDenormalized = new ArrayDenormalizer();
         $propertyNormalizer = new PropertyNormalizer(null, null, new PhpDocExtractor());
         $arrayDenormalized->setDenormalizer($propertyNormalizer);
-        $dateTimeNormalizer = new DateTimeNormalizer();
+        $dateTimeNormalizer = new DateTimeNormalizer([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d']);
 
         return new Serializer([$arrayDenormalized, new JsonSerializableNormalizer(), $propertyNormalizer, $dateTimeNormalizer], [new JsonEncoder()]);
     }
