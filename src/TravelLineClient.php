@@ -234,7 +234,7 @@ class TravelLineClient
     protected function hydrateResponseDto(array $denormalizedData, string $toDtoClass)
     {
         str_ends_with($toDtoClass, '[]') ?
-            $this->validate($toDtoClass, $denormalizedData, true) :
+            $this->validate(substr($toDtoClass, 0, -2), $denormalizedData, true) :
             $this->validate($toDtoClass, $denormalizedData, false);
 
         return $this->serializer->denormalize($denormalizedData, $toDtoClass, JsonEncoder::FORMAT);
