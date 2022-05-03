@@ -5,6 +5,7 @@ namespace egik\TravellineApi;
 // todo: разобраться с нейм спейсами
 use egik\TravellineApi\DenormalizerDecorator\EmptyValueNormalizerDecorator;
 use egik\TravellineApi\Exception\TravelLineBadResponseException;
+use egik\TravellineApi\Exception\TravelLineInvalidResponseException;
 use egik\TravellineApi\RequestDto\Reservation\CreateBooking\CreateBookingRequest;
 use egik\TravellineApi\RequestDto\Reservation\Verify\VerifyBookingRequest;
 use egik\TravellineApi\RequestDto\Search\RoomStays\RoomStays;
@@ -83,8 +84,16 @@ class TravelLineClient
         $this->serializer = $this->getSerializer();
     }
 
-    private function validate(string $dtoClassName, array $denormalizedData): void
+    private function validate(string $dtoClassName, array $denormalizedData, bool $isCollection): void
     {
+        if ($isCollection) {
+            foreach ($denormalizedData as $datum) {
+                $this->validate($dtoClassName, $datum, false);
+            }
+
+            return;
+        }
+
         /** @psalm-suppress TooManyArguments */
         $validator = Validation::createValidatorBuilder()
             ->enableAnnotationMapping(true)
@@ -103,6 +112,7 @@ class TravelLineClient
             if (!($propertyMetadata instanceof PropertyMetadataInterface)) {
                 continue;
             }
+
             $constraints[$propertyMetadata->getPropertyName()] = $propertyMetadata->getConstraints();
         }
 
@@ -118,8 +128,7 @@ class TravelLineClient
         }
 
         if (!empty($errors)) {
-            // todo: временный костыль
-            throw new \RuntimeException(json_encode($errors));
+            throw new TravelLineInvalidResponseException($errors);
         }
     }
 
@@ -140,7 +149,7 @@ class TravelLineClient
 
     private function deleteLastSlashIfNeed(string $baseUrl): string
     {
-        if (substr($baseUrl, 0, -1) == '/') {
+        if (str_ends_with($baseUrl, '/')) {
             return substr($baseUrl, 0, strlen($baseUrl) - 1);
         }
 
@@ -224,16 +233,9 @@ class TravelLineClient
      */
     protected function hydrateResponseDto(array $denormalizedData, string $toDtoClass)
     {
-        // todo: реализовать валидацию Response DTO
-        if (str_ends_with($toDtoClass, '[]')) {
-            $tmpClassName = str_replace('[]', '', $toDtoClass);
-
-            foreach ($denormalizedData as $dataItem) {
-                $this->validate($tmpClassName, $dataItem);
-            }
-        } else {
-            $this->validate($toDtoClass, $denormalizedData);
-        }
+        str_ends_with($toDtoClass, '[]') ?
+            $this->validate($toDtoClass, $denormalizedData, true) :
+            $this->validate($toDtoClass, $denormalizedData, false);
 
         return $this->serializer->denormalize($denormalizedData, $toDtoClass, JsonEncoder::FORMAT);
     }

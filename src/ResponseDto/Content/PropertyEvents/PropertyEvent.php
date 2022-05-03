@@ -2,19 +2,25 @@
 
 namespace egik\TravellineApi\ResponseDto\Content\PropertyEvents;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class PropertyEvent
 {
     /**
+     * todo: костыль с Assert'ами, нужна поддержка PHP 7.4 с строгой типизацией свойств
+     * @Assert\Type("string")
      * @var string
      */
     protected $created;
 
     /**
+     * @Assert\Type("string")
      * @var string
      */
     protected $propertyId;
 
     /**
+     * @Assert\Type("string")
      * @var string
      */
     protected $eventType;

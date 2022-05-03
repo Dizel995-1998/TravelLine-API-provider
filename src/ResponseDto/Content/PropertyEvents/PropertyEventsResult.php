@@ -2,20 +2,23 @@
 
 namespace egik\TravellineApi\ResponseDto\Content\PropertyEvents;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class PropertyEventsResult
 {
     /**
-     * @var PropertyEvent[]
+     * @var PropertyEvent[]|null
      */
     protected $events;
 
     /**
+     * @Assert\Type("boolean")
      * @var bool
      */
     protected $hasMoreData;
 
     /**
-     * @return PropertyEvent[]
+     * @return PropertyEvent[]|null
      */
     public function getEvents(): array
     {
